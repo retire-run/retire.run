@@ -1,6 +1,7 @@
 import { useLiveTime, useSaveData, useStatistics } from "@/utilities/hooks";
 import { getTotalHours, timeUtilities } from "@/utilities/time";
 import { Progress, Space } from "@mantine/core";
+import { useDocumentTitle } from "@mantine/hooks";
 import { FunctionComponent, useMemo } from "react";
 
 const Visualizer: FunctionComponent = () => {
@@ -17,6 +18,10 @@ const Visualizer: FunctionComponent = () => {
   const estimatedHours = getTotalHours(startWorkTime, time);
   const estimatedPercentage = estimatedHours / workingHours;
   const percentStr = `${(estimatedPercentage * 100).toFixed(4)}%`;
+
+  useDocumentTitle(
+    `💰 ${(estimatedPercentage * salaryPerDay).toFixed(2)} -UNIT-`
+  );
 
   return (
     <div>
