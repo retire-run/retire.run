@@ -17,6 +17,7 @@ const Visualizer: FunctionComponent = () => {
   const estimatedHours = getTotalHours(startWorkTime, time);
   const estimatedPercentage = estimatedHours / workingHours;
   const percentStr = `${(estimatedPercentage * 100).toFixed(4)}%`;
+
   return (
     <div>
       <Progress

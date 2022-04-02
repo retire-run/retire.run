@@ -10,11 +10,16 @@ import {
   RangeSlider,
   Space,
   Switch,
+  Title,
 } from "@mantine/core";
 import { FunctionComponent, useState } from "react";
 import TimeInput from "./TimeInput";
 
-const Editor: FunctionComponent = () => {
+interface Props {
+  onCommit: VoidFunction;
+}
+
+const Editor: FunctionComponent<Props> = ({ onCommit }) => {
   const [saveData, setSaveData] = useSaveData();
 
   const [workStart, setWorkStart] = useState(saveData.workTime.start);
@@ -43,9 +48,14 @@ const Editor: FunctionComponent = () => {
       salary,
       working_days: workDays,
     });
+
+    onCommit();
   };
+
   return (
     <>
+      <Title order={3}>你正在成功</Title>
+      <Space h="xl"></Space>
       <div>
         <RangeSlider
           min={0}

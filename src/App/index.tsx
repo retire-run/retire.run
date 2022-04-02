@@ -1,20 +1,29 @@
 import Editor from "@/components/Editor";
 import Visualizer from "@/components/Visualizer";
 import { useSaveData } from "@/utilities/hooks";
-import { Container, Space, Title } from "@mantine/core";
+import { Container, Modal, Space, Title } from "@mantine/core";
 import { FunctionComponent, useState } from "react";
 
 const App: FunctionComponent = () => {
-  const [editMode] = useState(false);
   const [saveData] = useSaveData();
-
-  const isInEditMode = editMode || saveData.edited === false;
+  const [editMode, setEditMode] = useState(!saveData.edited);
 
   return (
     <Container>
       <Title>retire.run</Title>
       <Space h="xl"></Space>
-      {isInEditMode ? <Editor></Editor> : <Visualizer></Visualizer>}
+      {!editMode && <Visualizer></Visualizer>}
+      <Modal
+        opened={editMode}
+        size="lg"
+        onClose={() => setEditMode(false)}
+        centered
+        withCloseButton={false}
+        closeOnClickOutside={false}
+        closeOnEscape={false}
+      >
+        <Editor onCommit={() => setEditMode(false)}></Editor>
+      </Modal>
     </Container>
   );
 };
