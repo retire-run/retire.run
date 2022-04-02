@@ -4,18 +4,16 @@ interface Time {
   second: number;
 }
 
+interface TimeRange {
+  start: number;
+  end: number;
+}
+
 interface SaveData {
   version: string;
   edited: boolean;
-  workTime: {
-    start: number;
-    end: number;
-  };
-  enabled_break: boolean;
-  breakTime: {
-    start: number;
-    end: number;
-  };
+  workTime: TimeRange;
+  breaks: TimeRange[];
   salary: number;
   working_days: number;
 }

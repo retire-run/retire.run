@@ -17,11 +17,7 @@ export function useSaveData() {
         start: timeUtilities.serialize({ hour: 9, minute: 0, second: 0 }),
         end: timeUtilities.serialize({ hour: 18, minute: 0, second: 0 }),
       },
-      enabled_break: false,
-      breakTime: {
-        start: timeUtilities.serialize({ hour: 12, minute: 0, second: 0 }),
-        end: timeUtilities.serialize({ hour: 13, minute: 0, second: 0 }),
-      },
+      breaks: [],
       salary: 0,
       working_days: 20,
     },
@@ -61,8 +57,7 @@ export function useStatistics() {
   const [saveData] = useSaveData();
 
   return useMemo(() => {
-    const { workTime, breakTime, enabled_break, salary, working_days } =
-      saveData;
+    const { workTime, breaks, salary, working_days } = saveData;
 
     const salaryPerDay = salary / working_days;
 
@@ -71,19 +66,23 @@ export function useStatistics() {
       timeUtilities.deserialize(workTime.end)
     );
 
-    const breakHours = getTotalHours(
-      timeUtilities.deserialize(breakTime.start),
-      timeUtilities.deserialize(breakTime.end)
+    const totalBreakHours = breaks.reduce(
+      (total, b) =>
+        total +
+        getTotalHours(
+          timeUtilities.deserialize(b.start),
+          timeUtilities.deserialize(b.end)
+        ),
+      0
     );
 
-    const effectiveWorkingHours =
-      workingHours - (enabled_break ? breakHours : 0.0);
+    const effectiveWorkingHours = workingHours - totalBreakHours;
 
     return {
       salaryPerDay,
       workingHours,
       effectiveWorkingHours,
-      breakHours,
+      totalBreakHours,
     };
   }, [saveData]);
 }

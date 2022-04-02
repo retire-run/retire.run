@@ -1,20 +1,21 @@
 import { RetireVersion } from "@/constants";
 import { useSaveData } from "@/utilities/hooks";
-import { timeUtilities, toMinutes } from "@/utilities/time";
+import { timeUtilities } from "@/utilities/time";
 import {
+  ActionIcon,
   Button,
-  Collapse,
   Divider,
   Group,
   NumberInput,
   RangeSlider,
   Space,
-  Switch,
+  Text,
   Title,
 } from "@mantine/core";
 import { FunctionComponent, useState } from "react";
 import { useTranslation } from "react-i18next";
-import TimeInput from "./TimeInput";
+import { FiTrash } from "react-icons/fi";
+import TimeRangeInput from "./TimeRangeInput";
 
 interface Props {
   onCommit: VoidFunction;
@@ -26,9 +27,7 @@ const Editor: FunctionComponent<Props> = ({ onCommit }) => {
   const [workStart, setWorkStart] = useState(saveData.workTime.start);
   const [workEnd, setWorkEnd] = useState(saveData.workTime.end);
 
-  const [enableBreak, setEnableBreak] = useState(saveData.enabled_break);
-  const [breakStart, setBreakStart] = useState(saveData.breakTime.start);
-  const [breakEnd, setBreakEnd] = useState(saveData.breakTime.end);
+  const [breaks, setBreaks] = useState(saveData.breaks);
 
   const [salary, setSalary] = useState(saveData.salary);
   const [workDays, setWorkDays] = useState(saveData.working_days);
@@ -41,11 +40,7 @@ const Editor: FunctionComponent<Props> = ({ onCommit }) => {
         start: workStart,
         end: workEnd,
       },
-      enabled_break: enableBreak,
-      breakTime: {
-        start: breakStart,
-        end: breakEnd,
-      },
+      breaks,
       salary,
       working_days: workDays,
     });
@@ -72,41 +67,79 @@ const Editor: FunctionComponent<Props> = ({ onCommit }) => {
           label={null}
         ></RangeSlider>
         <Space h="lg"></Space>
-        <Group>
-          <TimeInput
-            value={timeUtilities.deserialize(workStart)}
-            onChange={(value) => setWorkStart(toMinutes(value))}
-          ></TimeInput>
-          <TimeInput
-            value={timeUtilities.deserialize(workEnd)}
-            onChange={(value) => setWorkEnd(toMinutes(value))}
-          ></TimeInput>
-        </Group>
+        <TimeRangeInput
+          value={{ start: workStart, end: workEnd }}
+          onChange={({ start, end }) => {
+            setWorkStart(start);
+            setWorkEnd(end);
+          }}
+        ></TimeRangeInput>
       </div>
       <Divider my="xl"></Divider>
       <div>
-        <Switch
-          checked={enableBreak}
-          onChange={(event) => setEnableBreak(event.currentTarget.checked)}
-          label={t("break-switch")}
-        ></Switch>
-        <Space h="lg"></Space>
-        <Collapse in={enableBreak}>
-          <Group>
-            <TimeInput
-              value={timeUtilities.deserialize(breakStart)}
-              onChange={(value) => setBreakStart(toMinutes(value))}
-            ></TimeInput>
-            <TimeInput
-              value={timeUtilities.deserialize(breakEnd)}
-              onChange={(value) => setBreakEnd(toMinutes(value))}
-            ></TimeInput>
-          </Group>
-        </Collapse>
+        <Button
+          size="sm"
+          fullWidth
+          variant="light"
+          onClick={() =>
+            setBreaks((s) => {
+              const startHour =
+                s.length > 0
+                  ? timeUtilities.deserialize(s[s.length - 1].end).hour
+                  : 12;
+              return [
+                ...s,
+                {
+                  start: timeUtilities.serialize({
+                    hour: startHour,
+                    minute: 0,
+                    second: 0,
+                  }),
+                  end: timeUtilities.serialize({
+                    hour: startHour + 1,
+                    minute: 0,
+                    second: 0,
+                  }),
+                },
+              ];
+            })
+          }
+        >
+          <Text>{t("break-button")}</Text>
+        </Button>
+        {breaks.map((value, i) => (
+          <div key={`break-time-${i}-${value.start}-${value.end}`}>
+            <Space h="sm"></Space>
+            <Group position="center">
+              <TimeRangeInput
+                value={value}
+                onChange={(val) => {
+                  setBreaks((s) => {
+                    const list = [...s];
+                    list[i] = val;
+                    return list;
+                  });
+                }}
+              ></TimeRangeInput>
+              <ActionIcon
+                color="red"
+                onClick={() => {
+                  setBreaks((s) => {
+                    const list = [...s];
+                    list.splice(i, 1);
+                    return list;
+                  });
+                }}
+              >
+                <FiTrash></FiTrash>
+              </ActionIcon>
+            </Group>
+          </div>
+        ))}
       </div>
       <Divider my="xl"></Divider>
       <div>
-        <Group>
+        <Group grow>
           <NumberInput
             value={salary}
             label={t("salary-label")}
