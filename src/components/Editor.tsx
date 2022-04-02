@@ -13,6 +13,7 @@ import {
   Title,
 } from "@mantine/core";
 import { FunctionComponent, useState } from "react";
+import { useTranslation } from "react-i18next";
 import TimeInput from "./TimeInput";
 
 interface Props {
@@ -52,9 +53,11 @@ const Editor: FunctionComponent<Props> = ({ onCommit }) => {
     onCommit();
   };
 
+  const { t } = useTranslation("editor");
+
   return (
     <>
-      <Title order={3}>你正在成功</Title>
+      <Title order={3}>{t("title")}</Title>
       <Space h="xl"></Space>
       <div>
         <RangeSlider
@@ -85,7 +88,7 @@ const Editor: FunctionComponent<Props> = ({ onCommit }) => {
         <Switch
           checked={enableBreak}
           onChange={(event) => setEnableBreak(event.currentTarget.checked)}
-          label="Launch Break"
+          label={t("break-switch")}
         ></Switch>
         <Space h="lg"></Space>
         <Collapse in={enableBreak}>
@@ -106,21 +109,21 @@ const Editor: FunctionComponent<Props> = ({ onCommit }) => {
         <Group>
           <NumberInput
             value={salary}
-            label="Monthly Salary"
+            label={t("salary-label")}
             hideControls
             onChange={(value) => setSalary(value ?? 0)}
           ></NumberInput>
           <NumberInput
             value={workDays}
-            label="Work Days Per Month"
+            label={t("work-days-label")}
             onChange={(value) => setWorkDays(value ?? 0)}
           ></NumberInput>
         </Group>
       </div>
       <Space h="xl"></Space>
       <Group>
-        <Button onClick={commit}>Run</Button>
-        <Button onClick={commit}>I'm Feeling Boring</Button>
+        <Button onClick={commit}>{t("run-button")}</Button>
+        <Button onClick={commit}>{t("feeling-boring-button")}</Button>
       </Group>
     </>
   );

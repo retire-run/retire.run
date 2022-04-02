@@ -1,0 +1,19 @@
+{
+  "en": {
+    "translation": {}
+  },
+  "zh": {
+    "editor": {
+      "title": "你正在成功",
+      "break-switch": "启用午休",
+      "salary-label": "月薪资",
+      "work-days-label": "每月工作天数",
+      "run-button": "润",
+      "feeling-boring-button": "好无聊，好想回家"
+    },
+    "visualizer": {
+      "title": "一起摸鱼 🐡",
+      "estimated-salary-desc": "今天预计可以赚"
+    }
+  }
+}

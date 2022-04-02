@@ -1,8 +1,9 @@
 import { useLiveTime, useSaveData, useStatistics } from "@/utilities/hooks";
 import { getTotalHours, timeUtilities } from "@/utilities/time";
-import { Progress, Space } from "@mantine/core";
+import { Progress, Space, Title } from "@mantine/core";
 import { useDocumentTitle } from "@mantine/hooks";
 import { FunctionComponent, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
 const Visualizer: FunctionComponent = () => {
   const [saveData] = useSaveData();
@@ -19,12 +20,16 @@ const Visualizer: FunctionComponent = () => {
   const estimatedPercentage = estimatedHours / workingHours;
   const percentStr = `${(estimatedPercentage * 100).toFixed(4)}%`;
 
+  const { t } = useTranslation("visualizer");
+
   useDocumentTitle(
     `💰 ${(estimatedPercentage * salaryPerDay).toFixed(2)} -UNIT-`
   );
 
   return (
     <div>
+      <Title order={3}>{t("title")}</Title>
+      <Space h="xl"></Space>
       <Progress
         label={percentStr}
         size="lg"
@@ -34,7 +39,7 @@ const Visualizer: FunctionComponent = () => {
       ></Progress>
       <Space h="xl"></Space>
       <span>
-        Estimated to make a total of today's money {salaryPerDay} -UNIT-
+        {t("estimated-salary-desc")} {salaryPerDay} -UNIT-
       </span>
     </div>
   );
