@@ -1,6 +1,6 @@
 import { RetireVersion } from "@/constants";
 import { useSaveData } from "@/utilities/hooks";
-import { getTime, getTimeNumber } from "@/utilities/time";
+import { timeUtilities, toMinutes } from "@/utilities/time";
 import {
   Button,
   Collapse,
@@ -17,12 +17,12 @@ import TimeInput from "./TimeInput";
 const Editor: FunctionComponent = () => {
   const [saveData, setSaveData] = useSaveData();
 
-  const [workStart, setWorkStart] = useState(saveData.work.start);
-  const [workEnd, setWorkEnd] = useState(saveData.work.end);
+  const [workStart, setWorkStart] = useState(saveData.workTime.start);
+  const [workEnd, setWorkEnd] = useState(saveData.workTime.end);
 
   const [enableBreak, setEnableBreak] = useState(saveData.enabled_break);
-  const [breakStart, setBreakStart] = useState(saveData.break.start);
-  const [breakEnd, setBreakEnd] = useState(saveData.break.end);
+  const [breakStart, setBreakStart] = useState(saveData.breakTime.start);
+  const [breakEnd, setBreakEnd] = useState(saveData.breakTime.end);
 
   const [salary, setSalary] = useState(saveData.salary);
   const [workDays, setWorkDays] = useState(saveData.working_days);
@@ -31,12 +31,12 @@ const Editor: FunctionComponent = () => {
     setSaveData({
       version: RetireVersion,
       edited: true,
-      work: {
+      workTime: {
         start: workStart,
         end: workEnd,
       },
       enabled_break: enableBreak,
-      break: {
+      breakTime: {
         start: breakStart,
         end: breakEnd,
       },
@@ -61,12 +61,12 @@ const Editor: FunctionComponent = () => {
         <Space h="lg"></Space>
         <Group>
           <TimeInput
-            value={getTime(workStart)}
-            onChange={(value) => setWorkStart(getTimeNumber(value))}
+            value={timeUtilities.deserialize(workStart)}
+            onChange={(value) => setWorkStart(toMinutes(value))}
           ></TimeInput>
           <TimeInput
-            value={getTime(workEnd)}
-            onChange={(value) => setWorkEnd(getTimeNumber(value))}
+            value={timeUtilities.deserialize(workEnd)}
+            onChange={(value) => setWorkEnd(toMinutes(value))}
           ></TimeInput>
         </Group>
       </div>
@@ -81,12 +81,12 @@ const Editor: FunctionComponent = () => {
         <Collapse in={enableBreak}>
           <Group>
             <TimeInput
-              value={getTime(breakStart)}
-              onChange={(value) => setBreakStart(getTimeNumber(value))}
+              value={timeUtilities.deserialize(breakStart)}
+              onChange={(value) => setBreakStart(toMinutes(value))}
             ></TimeInput>
             <TimeInput
-              value={getTime(breakEnd)}
-              onChange={(value) => setBreakEnd(getTimeNumber(value))}
+              value={timeUtilities.deserialize(breakEnd)}
+              onChange={(value) => setBreakEnd(toMinutes(value))}
             ></TimeInput>
           </Group>
         </Collapse>

@@ -1,4 +1,4 @@
-import { getTime, getTimeNum, getTimeNumber } from "@/utilities/time";
+import { timeUtilities, toMinutes } from "@/utilities/time";
 import { NumberInput } from "@mantine/core";
 import { FunctionComponent } from "react";
 
@@ -13,24 +13,32 @@ const TimeInput: FunctionComponent<Props> = ({
 }) => {
   return (
     <NumberInput
-      value={getTimeNumber(value)}
+      value={toMinutes(value)}
       parser={(value) => {
         if (value) {
           const [hour, minute] = value.split(":");
-          return getTimeNum(parseInt(hour), parseInt(minute)).toString();
+          return timeUtilities
+            .serialize({
+              hour: parseInt(hour),
+              minute: parseInt(minute),
+              second: 0,
+            })
+            .toString();
         }
         return value;
       }}
       formatter={(value) => {
         if (value && !isNaN(parseInt(value))) {
-          const time = getTime(parseInt(value));
+          const time = timeUtilities.deserialize(parseInt(value));
           const hourStr = time.hour.toString().padStart(2, "0");
           const minuteStr = time.minute.toString().padStart(2, "0");
           return `${hourStr}:${minuteStr}`;
         }
         return "00:00";
       }}
-      onChange={(value) => onChanged && onChanged(getTime(value ?? 0))}
+      onChange={(value) =>
+        onChanged && onChanged(timeUtilities.deserialize(value ?? 0))
+      }
     ></NumberInput>
   );
 };

@@ -1,14 +1,41 @@
-export function getTime(num: number): Time {
-  const hour = num % 60;
-  const minute = Math.floor(num / 60);
+export const timeUtilities = {
+  serialize: (time: Time): number => {
+    return toMinutes(time);
+  },
+  deserialize: (inValue: number): Time => {
+    const hour = inValue % 60;
+    const minute = Math.floor(inValue / 60);
 
-  return { hour, minute };
+    return { hour, minute, second: 0 };
+  },
+};
+
+export function toSeconds(time: Time): number {
+  const hourToSec = time.hour * 60 * 60;
+  const minuteToSec = time.minute * 60;
+  return hourToSec + minuteToSec + time.second;
 }
 
-export function getTimeNumber(time: Time): number {
-  return time.hour * 60 + time.minute;
+export function toMinutes(time: Time): number {
+  const hourToMin = time.hour * 60;
+  const secondToMin = time.second / 60;
+  return hourToMin + time.minute + secondToMin;
 }
 
-export function getTimeNum(hour: number, minute: number): number {
-  return getTimeNumber({ hour, minute });
+export function toHours(time: Time): number {
+  const minuteToHour = time.minute / 60;
+  const secondToHour = time.second / 60 / 60;
+  return time.hour + minuteToHour + secondToHour;
+}
+
+export function getTotalSeconds(from: Time, to: Time): number {
+  return toSeconds(from) - toSeconds(to);
+}
+
+export function getTotalMinutes(from: Time, to: Time): number {
+  return toMinutes(to) - toMinutes(from);
+}
+
+export function getTotalHours(from: Time, to: Time): number {
+  return toHours(from) - toHours(to);
 }

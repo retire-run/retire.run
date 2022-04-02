@@ -1,17 +1,18 @@
 interface Time {
   hour: number;
   minute: number;
+  second: number;
 }
 
 interface SaveData {
   version: string;
   edited: boolean;
-  work: {
+  workTime: {
     start: number;
     end: number;
   };
   enabled_break: boolean;
-  break: {
+  breakTime: {
     start: number;
     end: number;
   };

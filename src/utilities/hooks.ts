@@ -1,6 +1,7 @@
 import { RetireVersion } from "@/constants";
-import { useLocalStorage } from "@mantine/hooks";
-import { getTimeNum } from "./time";
+import { useInterval, useLocalStorage } from "@mantine/hooks";
+import { useMemo, useState } from "react";
+import { getTotalHours, timeUtilities } from "./time";
 
 export function useSaveData() {
   return useLocalStorage<SaveData>({
@@ -8,17 +9,71 @@ export function useSaveData() {
     defaultValue: {
       version: RetireVersion,
       edited: false,
-      work: {
-        start: getTimeNum(9, 0),
-        end: getTimeNum(18, 0),
+      workTime: {
+        start: timeUtilities.serialize({ hour: 9, minute: 0, second: 0 }),
+        end: timeUtilities.serialize({ hour: 18, minute: 0, second: 0 }),
       },
       enabled_break: false,
-      break: {
-        start: getTimeNum(12, 0),
-        end: getTimeNum(13, 0),
+      breakTime: {
+        start: timeUtilities.serialize({ hour: 12, minute: 0, second: 0 }),
+        end: timeUtilities.serialize({ hour: 13, minute: 0, second: 0 }),
       },
       salary: 0,
       working_days: 20,
     },
   });
+}
+
+export function useLiveTime() {
+  const [time, setTime] = useState<Time>(() => {
+    const date = new Date();
+    return {
+      hour: date.getHours(),
+      minute: date.getMinutes(),
+      second: date.getSeconds(),
+    };
+  });
+
+  useInterval(() => {
+    // TODO: optimize this
+    const date = new Date();
+    setTime({
+      hour: date.getHours(),
+      minute: date.getMinutes(),
+      second: date.getSeconds(),
+    });
+  }, 1 * 1000);
+
+  return time;
+}
+
+export function useStatistics() {
+  const [saveData] = useSaveData();
+
+  return useMemo(() => {
+    const { workTime, breakTime, enabled_break, salary, working_days } =
+      saveData;
+
+    const salaryPerDay = salary / working_days;
+
+    const workingHours = getTotalHours(
+      timeUtilities.deserialize(workTime.start),
+      timeUtilities.deserialize(workTime.end)
+    );
+
+    const breakHours = getTotalHours(
+      timeUtilities.deserialize(breakTime.start),
+      timeUtilities.deserialize(breakTime.end)
+    );
+
+    const effectiveWorkingHours =
+      workingHours - (enabled_break ? breakHours : 0.0);
+
+    return {
+      salaryPerDay,
+      workingHours,
+      effectiveWorkingHours,
+      breakHours,
+    };
+  }, [saveData]);
 }
