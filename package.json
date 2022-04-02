@@ -36,6 +36,7 @@
     "pretty-quick": "latest",
     "typescript": "latest",
     "vite": "latest",
-    "vite-plugin-checker": "latest"
+    "vite-plugin-checker": "latest",
+    "vite-plugin-pwa": "^0.11.13"
   }
 }

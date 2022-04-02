@@ -4,6 +4,7 @@ import react from "@vitejs/plugin-react";
 import path from "path";
 import { defineConfig } from "vite";
 import checker from "vite-plugin-checker";
+import { VitePWA } from "vite-plugin-pwa";
 import { dependencies } from "./package.json";
 
 const groupedDeps = ["react", "react-dom", "react-icons"];
@@ -23,6 +24,7 @@ function renderChunks(deps: Record<string, string>) {
 export default defineConfig({
   plugins: [
     react(),
+    VitePWA(),
     checker({
       typescript: true,
       eslint: {
