@@ -3,8 +3,8 @@ export const timeUtilities = {
     return toMinutes(time);
   },
   deserialize: (inValue: number): Time => {
-    const hour = inValue % 60;
-    const minute = Math.floor(inValue / 60);
+    const hour = Math.floor(inValue / 60);
+    const minute = inValue % 60;
 
     return { hour, minute, second: 0 };
   },
@@ -29,7 +29,7 @@ export function toHours(time: Time): number {
 }
 
 export function getTotalSeconds(from: Time, to: Time): number {
-  return toSeconds(from) - toSeconds(to);
+  return toSeconds(to) - toSeconds(from);
 }
 
 export function getTotalMinutes(from: Time, to: Time): number {
@@ -37,5 +37,5 @@ export function getTotalMinutes(from: Time, to: Time): number {
 }
 
 export function getTotalHours(from: Time, to: Time): number {
-  return toHours(from) - toHours(to);
+  return toHours(to) - toHours(from);
 }

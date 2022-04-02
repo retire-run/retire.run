@@ -1,6 +1,6 @@
-import { RetireVersion } from "@/constants";
+import { RetireRefreshRate, RetireVersion } from "@/constants";
 import { useInterval, useLocalStorage } from "@mantine/hooks";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { getTotalHours, timeUtilities } from "./time";
 
 export function useSaveData() {
@@ -34,7 +34,7 @@ export function useLiveTime() {
     };
   });
 
-  useInterval(() => {
+  const interval = useInterval(() => {
     // TODO: optimize this
     const date = new Date();
     setTime({
@@ -42,7 +42,13 @@ export function useLiveTime() {
       minute: date.getMinutes(),
       second: date.getSeconds(),
     });
-  }, 1 * 1000);
+  }, RetireRefreshRate);
+
+  useEffect(() => {
+    interval.start();
+    return interval.stop;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return time;
 }
