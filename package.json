@@ -16,25 +16,24 @@
   "dependencies": {
     "react": "latest",
     "react-dom": "latest",
-    "react-icons": "latest",
-    "tailwind-merge": "latest"
+    "react-icons": "latest"
   },
   "devDependencies": {
+    "@mantine/core": "^4.1.1",
+    "@mantine/hooks": "^4.1.1",
     "@types/node": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
-    "@vitejs/plugin-react-refresh": "latest",
+    "@vitejs/plugin-react": "latest",
     "autoprefixer": "latest",
     "clsx": "latest",
     "eslint": "latest",
     "eslint-config-react-app": "latest",
     "eslint-plugin-react-hooks": "latest",
     "husky": "latest",
-    "postcss": "latest",
     "prettier": "latest",
     "prettier-plugin-organize-imports": "latest",
     "pretty-quick": "latest",
-    "tailwindcss": "latest",
     "typescript": "latest",
     "vite": "latest",
     "vite-plugin-checker": "latest"

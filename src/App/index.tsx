@@ -1,7 +1,13 @@
-import React, { FunctionComponent } from "react";
+import { Button, Title } from "@mantine/core";
+import { FunctionComponent } from "react";
 
 const App: FunctionComponent = () => {
-  return <div className="">This is a template</div>;
+  return (
+    <>
+      <Title>retire.run</Title>
+      <Button>Run</Button>
+    </>
+  );
 };
 
 export default App;
