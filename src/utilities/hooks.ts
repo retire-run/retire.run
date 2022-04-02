@@ -1,3 +1,4 @@
+import { RetireVersion } from "@/constants";
 import { useLocalStorage } from "@mantine/hooks";
 import { getTimeNum } from "./time";
 
@@ -5,6 +6,8 @@ export function useSaveData() {
   return useLocalStorage<SaveData>({
     key: "retire-save-data",
     defaultValue: {
+      version: RetireVersion,
+      edited: false,
       work: {
         start: getTimeNum(9, 0),
         end: getTimeNum(18, 0),

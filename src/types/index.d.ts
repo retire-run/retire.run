@@ -4,6 +4,8 @@ interface Time {
 }
 
 interface SaveData {
+  version: string;
+  edited: boolean;
   work: {
     start: number;
     end: number;

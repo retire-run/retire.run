@@ -1,23 +1,21 @@
 import Editor from "@/components/Editor";
-import { createStyles, Title } from "@mantine/core";
-import { FunctionComponent } from "react";
-
-const useStyles = createStyles((theme) => ({
-  wrapper: {
-    margin: "1.2rem",
-  },
-}));
+import Visualizer from "@/components/Visualizer";
+import { useSaveData } from "@/utilities/hooks";
+import { Container, Space, Title } from "@mantine/core";
+import { FunctionComponent, useState } from "react";
 
 const App: FunctionComponent = () => {
-  const { classes } = useStyles();
+  const [editMode] = useState(false);
+  const [saveData] = useSaveData();
+
+  const isInEditMode = editMode || saveData.edited === false;
 
   return (
-    <>
+    <Container>
       <Title>retire.run</Title>
-      <div className={classes.wrapper}>
-        <Editor></Editor>
-      </div>
-    </>
+      <Space h="xl"></Space>
+      {isInEditMode ? <Editor></Editor> : <Visualizer></Visualizer>}
+    </Container>
   );
 };
 

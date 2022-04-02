@@ -1,3 +1,4 @@
+import { RetireVersion } from "@/constants";
 import { useSaveData } from "@/utilities/hooks";
 import { getTime, getTimeNumber } from "@/utilities/time";
 import {
@@ -28,6 +29,8 @@ const Editor: FunctionComponent = () => {
 
   const commit = () => {
     setSaveData({
+      version: RetireVersion,
+      edited: true,
       work: {
         start: workStart,
         end: workEnd,
