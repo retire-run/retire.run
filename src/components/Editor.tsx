@@ -1,14 +1,46 @@
-import { getTime, getTimeNum, getTimeNumber } from "@/utility/time";
-import { Group, NumberInput, RangeSlider, Space, Switch } from "@mantine/core";
+import { useSaveData } from "@/utilities/hooks";
+import { getTime, getTimeNumber } from "@/utilities/time";
+import {
+  Button,
+  Collapse,
+  Divider,
+  Group,
+  NumberInput,
+  RangeSlider,
+  Space,
+  Switch,
+} from "@mantine/core";
 import { FunctionComponent, useState } from "react";
 import TimeInput from "./TimeInput";
 
 const Editor: FunctionComponent = () => {
-  const [workStart, setWorkStart] = useState(getTimeNum(9, 0));
-  const [workEnd, setWorkEnd] = useState(getTimeNum(18, 0));
+  const [saveData, setSaveData] = useSaveData();
 
-  const [salary, setSalary] = useState(0);
-  const [workDays, setWorkDays] = useState(20);
+  const [workStart, setWorkStart] = useState(saveData.work.start);
+  const [workEnd, setWorkEnd] = useState(saveData.work.end);
+
+  const [enableBreak, setEnableBreak] = useState(saveData.enabled_break);
+  const [breakStart, setBreakStart] = useState(saveData.break.start);
+  const [breakEnd, setBreakEnd] = useState(saveData.break.end);
+
+  const [salary, setSalary] = useState(saveData.salary);
+  const [workDays, setWorkDays] = useState(saveData.working_days);
+
+  const commit = () => {
+    setSaveData({
+      work: {
+        start: workStart,
+        end: workEnd,
+      },
+      enabled_break: enableBreak,
+      break: {
+        start: breakStart,
+        end: breakEnd,
+      },
+      salary,
+      working_days: workDays,
+    });
+  };
   return (
     <>
       <div>
@@ -35,11 +67,28 @@ const Editor: FunctionComponent = () => {
           ></TimeInput>
         </Group>
       </div>
-      <Space h="xl"></Space>
+      <Divider my="xl"></Divider>
       <div>
-        <Switch label="Launch Break"></Switch>
+        <Switch
+          checked={enableBreak}
+          onChange={(event) => setEnableBreak(event.currentTarget.checked)}
+          label="Launch Break"
+        ></Switch>
+        <Space h="lg"></Space>
+        <Collapse in={enableBreak}>
+          <Group>
+            <TimeInput
+              value={getTime(breakStart)}
+              onChange={(value) => setBreakStart(getTimeNumber(value))}
+            ></TimeInput>
+            <TimeInput
+              value={getTime(breakEnd)}
+              onChange={(value) => setBreakEnd(getTimeNumber(value))}
+            ></TimeInput>
+          </Group>
+        </Collapse>
       </div>
-      <Space h="xl"></Space>
+      <Divider my="xl"></Divider>
       <div>
         <Group>
           <NumberInput
@@ -55,6 +104,11 @@ const Editor: FunctionComponent = () => {
           ></NumberInput>
         </Group>
       </div>
+      <Space h="xl"></Space>
+      <Group>
+        <Button onClick={commit}>Run</Button>
+        <Button onClick={commit}>I'm Feeling Boring</Button>
+      </Group>
     </>
   );
 };

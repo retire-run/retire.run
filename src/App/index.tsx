@@ -1,5 +1,5 @@
 import Editor from "@/components/Editor";
-import { Button, createStyles, Group, Title } from "@mantine/core";
+import { createStyles, Title } from "@mantine/core";
 import { FunctionComponent } from "react";
 
 const useStyles = createStyles((theme) => ({
@@ -17,10 +17,6 @@ const App: FunctionComponent = () => {
       <div className={classes.wrapper}>
         <Editor></Editor>
       </div>
-      <Group>
-        <Button>Run</Button>
-        <Button>I'm Feeling Lucky</Button>
-      </Group>
     </>
   );
 };

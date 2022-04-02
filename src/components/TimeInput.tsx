@@ -1,4 +1,4 @@
-import { getTime, getTimeNum, getTimeNumber } from "@/utility/time";
+import { getTime, getTimeNum, getTimeNumber } from "@/utilities/time";
 import { NumberInput } from "@mantine/core";
 import { FunctionComponent } from "react";
 
