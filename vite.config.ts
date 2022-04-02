@@ -1,3 +1,6 @@
+/// <reference types="vite/client" />
+/// <reference types="node" />
+
 import reactRefresh from "@vitejs/plugin-react-refresh";
 import path from "path";
 import { defineConfig } from "vite";
