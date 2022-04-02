@@ -1,3 +1,4 @@
+import { clamp } from "@/utilities";
 import { useLiveTime, useSaveData, useStatistics } from "@/utilities/hooks";
 import { getTotalHours, timeUtilities } from "@/utilities/time";
 import { Progress, Space, Title } from "@mantine/core";
@@ -17,13 +18,17 @@ const Visualizer: FunctionComponent = () => {
   );
 
   const estimatedHours = getTotalHours(startWorkTime, time);
-  const estimatedPercentage = estimatedHours / workingHours;
+  const estimatedPercentage = clamp(estimatedHours / workingHours, 0, 1);
   const percentStr = `${(estimatedPercentage * 100).toFixed(4)}%`;
 
   const { t } = useTranslation("visualizer");
 
+  const moneyAvailable = estimatedPercentage >= 1.0;
+
   useDocumentTitle(
-    `💰 ${(estimatedPercentage * salaryPerDay).toFixed(2)} -UNIT-`
+    `💰 ${(estimatedPercentage * salaryPerDay).toFixed(2)} ${
+      moneyAvailable ? t("available") : "-UNIT-"
+    }`
   );
 
   return (
@@ -33,8 +38,8 @@ const Visualizer: FunctionComponent = () => {
       <Progress
         label={percentStr}
         size="lg"
-        striped
-        animate
+        striped={!moneyAvailable}
+        animate={!moneyAvailable}
         value={estimatedPercentage * 100.0}
       ></Progress>
       <Space h="xl"></Space>

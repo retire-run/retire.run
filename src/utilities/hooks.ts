@@ -1,11 +1,15 @@
-import { RetireRefreshRate, RetireVersion } from "@/constants";
+import {
+  RetireRefreshRate,
+  RetireSaveDataKey,
+  RetireVersion,
+} from "@/constants";
 import { useInterval, useLocalStorage } from "@mantine/hooks";
 import { useEffect, useMemo, useState } from "react";
 import { getTotalHours, timeUtilities } from "./time";
 
 export function useSaveData() {
   return useLocalStorage<SaveData>({
-    key: "retire-save-data",
+    key: RetireSaveDataKey,
     defaultValue: {
       version: RetireVersion,
       edited: false,

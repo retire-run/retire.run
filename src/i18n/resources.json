@@ -13,7 +13,8 @@
     },
     "visualizer": {
       "title": "一起摸鱼 🐡",
-      "estimated-salary-desc": "今天预计可以赚"
+      "estimated-salary-desc": "今天预计可以赚",
+      "available": "已达成"
     }
   }
 }
