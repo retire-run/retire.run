@@ -3,6 +3,12 @@
     "translation": {}
   },
   "zh": {
+    "app": {
+      "title": "retire.run",
+      "menu-label": "灵魂献祭",
+      "menu-settings-btn": "设置",
+      "menu-sell-soul-btn": "将灵魂献祭给恶魔"
+    },
     "editor": {
       "title": "你正在成功",
       "break-switch": "启用午休",
