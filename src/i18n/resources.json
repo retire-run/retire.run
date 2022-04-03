@@ -15,14 +15,19 @@
       "salary-label": "月薪资",
       "work-days-label": "每月工作天数",
       "sell-soul-switch": "我愿意将灵魂出售给恶魔",
+      "soul-mode-set-salary-btn": "设置薪资",
       "run-button": "润",
-      "feeling-boring-button": "好无聊，好想回家"
+      "feeling-boring-button": "好无聊，好想回家",
+      "salary-select-title": "选择薪资"
     },
     "visualizer": {
       "title": "一起摸鱼 🐡",
       "estimated-salary-desc": "今天预计可以赚",
       "total-collected-desc": "你已经赚了",
       "available": "已达成"
+    },
+    "salary-selector": {
+      "regenerate-btn": "不喜欢？换一批薪资"
     }
   }
 }

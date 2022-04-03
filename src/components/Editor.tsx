@@ -9,8 +9,11 @@ import { timeUtilities } from "@/utilities/time";
 import {
   ActionIcon,
   Button,
+  DefaultMantineColor,
   Divider,
+  Grid,
   Group,
+  Modal,
   NativeSelect,
   NumberInput,
   RangeSlider,
@@ -22,7 +25,10 @@ import {
 import { FunctionComponent, useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FiEyeOff, FiTrash, FiUserPlus } from "react-icons/fi";
+import SalarySelector from "./SalarySelector";
 import TimeRangeInput from "./TimeRangeInput";
+
+const SoulModeColor: DefaultMantineColor = "dark";
 
 interface Props {
   onCommit: VoidFunction;
@@ -96,6 +102,8 @@ const Editor: FunctionComponent<Props> = ({ onCommit }) => {
   };
 
   const [boringCount, setBoringCount] = useState(0);
+  // Soul mode only
+  const [salaryModalOpened, setSalaryModalOpened] = useState(false);
 
   const showSoulSwitch = boringCount > 10 || saveData.soul_mode;
 
@@ -107,6 +115,7 @@ const Editor: FunctionComponent<Props> = ({ onCommit }) => {
       <Space h="xl"></Space>
       <div>
         <RangeSlider
+          color={soulMode ? SoulModeColor : undefined}
           min={0}
           max={24 * 60}
           value={[
@@ -164,68 +173,90 @@ const Editor: FunctionComponent<Props> = ({ onCommit }) => {
         {breaks.map((value, i) => (
           <div key={`break-time-${i}-${value.start}-${value.end}`}>
             <Space h="sm"></Space>
-            <Group>
-              <TimeRangeInput
-                icon={<FiEyeOff />}
-                withSeconds
-                value={value}
-                onChange={(val) => {
-                  setBreaks((s) => {
-                    const list = [...s];
-                    list[i] = val;
-                    return list;
-                  });
-                }}
-              ></TimeRangeInput>
-              <ActionIcon
-                color="red"
-                onClick={() => {
-                  setBreaks((s) => {
-                    const list = [...s];
-                    list.splice(i, 1);
-                    return list;
-                  });
-                }}
-              >
-                <FiTrash></FiTrash>
-              </ActionIcon>
-            </Group>
+            <Grid grow align="center">
+              <Grid.Col span={11}>
+                <TimeRangeInput
+                  icon={<FiEyeOff />}
+                  withSeconds
+                  value={value}
+                  onChange={(val) => {
+                    setBreaks((s) => {
+                      const list = [...s];
+                      list[i] = val;
+                      return list;
+                    });
+                  }}
+                ></TimeRangeInput>
+              </Grid.Col>
+              <Grid.Col span={1}>
+                <ActionIcon
+                  color="red"
+                  onClick={() => {
+                    setBreaks((s) => {
+                      const list = [...s];
+                      list.splice(i, 1);
+                      return list;
+                    });
+                  }}
+                >
+                  <FiTrash></FiTrash>
+                </ActionIcon>
+              </Grid.Col>
+            </Grid>
           </div>
         ))}
       </div>
       <Divider my="xl"></Divider>
       <div>
-        <Group grow>
-          <div>
+        <Grid grow align="end">
+          <Grid.Col span={6}>
+            {soulMode ? (
+              <div>
+                <Text size="sm" weight="bold">
+                  {salary} {currency}
+                </Text>
+                <Group grow>
+                  <Button
+                    color={soulMode ? SoulModeColor : undefined}
+                    onClick={() => setSalaryModalOpened(true)}
+                  >
+                    {t("soul-mode-set-salary-btn")}
+                  </Button>
+                </Group>
+              </div>
+            ) : (
+              <NumberInput
+                value={salary}
+                min={0}
+                label={t("salary-label")}
+                hideControls
+                onChange={(value) => setSalary(value ?? 0)}
+                styles={{ rightSection: { width: "3rem" } }}
+                rightSection={
+                  <NativeSelect
+                    style={{ width: "100%" }}
+                    variant="unstyled"
+                    size="xs"
+                    data={RetireCurrencyList}
+                    value={currency}
+                    onChange={({ currentTarget: { value } }) =>
+                      setCurrency(value)
+                    }
+                  ></NativeSelect>
+                }
+              ></NumberInput>
+            )}
+          </Grid.Col>
+          <Grid.Col span={6}>
             <NumberInput
-              value={salary}
+              value={workDays}
               min={0}
-              label={t("salary-label")}
-              hideControls
-              onChange={(value) => setSalary(value ?? 0)}
-              styles={{ rightSection: { width: "3rem" } }}
-              rightSection={
-                <NativeSelect
-                  style={{ width: "100%" }}
-                  variant="unstyled"
-                  size="xs"
-                  data={RetireCurrencyList}
-                  value={currency}
-                  onChange={({ currentTarget: { value } }) =>
-                    setCurrency(value)
-                  }
-                ></NativeSelect>
-              }
+              max={31}
+              label={t("work-days-label")}
+              onChange={(value) => setWorkDays(value ?? 0)}
             ></NumberInput>
-          </div>
-          <NumberInput
-            value={workDays}
-            min={0}
-            max={31}
-            label={t("work-days-label")}
-            onChange={(value) => setWorkDays(value ?? 0)}
-          ></NumberInput>
-        </Group>
+          </Grid.Col>
+        </Grid>
       </div>
       <Space h="xl"></Space>
       <Group position="apart">
@@ -251,6 +282,21 @@ const Editor: FunctionComponent<Props> = ({ onCommit }) => {
             onChange={({ currentTarget: { checked } }) => setSoulMode(checked)}
           ></Switch>
         </div>
+        <Modal
+          title={`${t("salary-select-title")} (${currency})`}
+          size="xl"
+          opened={salaryModalOpened}
+          onClose={() => {
+            setSalaryModalOpened(false);
+          }}
+        >
+          <SalarySelector
+            onChange={(value) => {
+              setSalaryModalOpened(false);
+              setSalary(value);
+            }}
+          ></SalarySelector>
+        </Modal>
       </Group>
     </>
   );
