@@ -12,6 +12,7 @@ interface TimeRange {
 interface SaveData {
   version: string;
   edited: boolean;
+  soul_mode: boolean;
   workTime: TimeRange;
   breaks: TimeRange[];
   salary: number;

@@ -1,4 +1,4 @@
-import { RetireVersion } from "@/constants";
+import { RetireDefaultSaveData, RetireVersion } from "@/constants";
 import { useSaveData } from "@/utilities/hooks";
 import { timeUtilities } from "@/utilities/time";
 import {
@@ -13,7 +13,7 @@ import {
   Text,
   Title,
 } from "@mantine/core";
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FiEyeOff, FiTrash, FiUserPlus } from "react-icons/fi";
 import TimeRangeInput from "./TimeRangeInput";
@@ -24,6 +24,40 @@ interface Props {
 
 const Editor: FunctionComponent<Props> = ({ onCommit }) => {
   const [saveData, setSaveData] = useSaveData();
+  const [soulMode, setSoulModeInternal] = useState(saveData.soul_mode);
+
+  const setSoulMode = useCallback(
+    (value: boolean) => {
+      setSoulModeInternal(value);
+      // Reset everything
+      if (value) {
+        setSaveData({
+          version: RetireVersion,
+          edited: false,
+          soul_mode: true,
+          workTime: {
+            start: { hour: 6, minute: 0, second: 0 },
+            end: { hour: 23, minute: 0, second: 0 },
+          },
+          breaks: [],
+          salary: 0,
+          working_days: 31,
+        });
+      } else {
+        setSaveData(RetireDefaultSaveData);
+      }
+    },
+    [setSaveData]
+  );
+
+  useEffect(() => {
+    setWorkStart(saveData.workTime.start);
+    setWorkEnd(saveData.workTime.end);
+    setBreaks(saveData.breaks);
+    setSalary(saveData.salary);
+    setWorkDays(saveData.working_days);
+    setSoulModeInternal(saveData.soul_mode);
+  }, [saveData]);
 
   const [workStart, setWorkStart] = useState(saveData.workTime.start);
   const [workEnd, setWorkEnd] = useState(saveData.workTime.end);
@@ -37,6 +71,7 @@ const Editor: FunctionComponent<Props> = ({ onCommit }) => {
     setSaveData({
       version: RetireVersion,
       edited: true,
+      soul_mode: soulMode,
       workTime: {
         start: workStart,
         end: workEnd,
@@ -53,7 +88,7 @@ const Editor: FunctionComponent<Props> = ({ onCommit }) => {
 
   return (
     <>
-      <Title order={3}>{t("title")}</Title>
+      <Title order={3}>{soulMode ? t("title-soul-mode") : t("title")}</Title>
       <Space h="xl"></Space>
       <div>
         <RangeSlider
@@ -84,6 +119,7 @@ const Editor: FunctionComponent<Props> = ({ onCommit }) => {
       <Divider my="xl"></Divider>
       <div>
         <Button
+          disabled={soulMode}
           size="sm"
           fullWidth
           variant="light"
@@ -161,14 +197,21 @@ const Editor: FunctionComponent<Props> = ({ onCommit }) => {
       <Space h="xl"></Space>
       <Group position="apart">
         <Group>
-          <Button color="green" onClick={commit}>
+          <Button color={soulMode ? "red" : "green"} onClick={commit}>
             {t("run-button")}
           </Button>
-          <Button color="gray" variant="light" onClick={commit}>
-            {t("feeling-boring-button")}
-          </Button>
+          <div hidden={soulMode}>
+            <Button color="gray" variant="light" onClick={commit}>
+              {t("feeling-boring-button")}
+            </Button>
+          </div>
         </Group>
-        <Switch color="red" label={t("sell-soul-switch")}></Switch>
+        <Switch
+          color="red"
+          label={t("sell-soul-switch")}
+          checked={soulMode}
+          onChange={({ currentTarget: { checked } }) => setSoulMode(checked)}
+        ></Switch>
       </Group>
     </>
   );

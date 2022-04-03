@@ -1,7 +1,7 @@
 import {
+  RetireDefaultSaveData,
   RetireRefreshRate,
   RetireSaveDataKey,
-  RetireVersion,
 } from "@/constants";
 import { useInterval, useLocalStorage } from "@mantine/hooks";
 import { useEffect, useMemo, useState } from "react";
@@ -11,17 +11,7 @@ import { getTotalHours } from "./time";
 export function useSaveData() {
   return useLocalStorage<SaveData>({
     key: RetireSaveDataKey,
-    defaultValue: {
-      version: RetireVersion,
-      edited: false,
-      workTime: {
-        start: { hour: 9, minute: 0, second: 0 },
-        end: { hour: 18, minute: 0, second: 0 },
-      },
-      breaks: [],
-      salary: 0,
-      working_days: 20,
-    },
+    defaultValue: RetireDefaultSaveData,
   });
 }
 
