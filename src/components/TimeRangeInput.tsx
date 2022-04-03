@@ -10,7 +10,11 @@ type Props = Omit<MantineTimeRangeInputProps, "value" | "onChange"> & {
   onChange: (value: TimeRange) => void;
 };
 
-const TimeRangeInput: FunctionComponent<Props> = ({ value, onChange }) => {
+const TimeRangeInput: FunctionComponent<Props> = ({
+  value,
+  onChange,
+  ...other
+}) => {
   const { start, end } = value;
   return (
     <MantineTimeRangeInput
@@ -23,6 +27,7 @@ const TimeRangeInput: FunctionComponent<Props> = ({ value, onChange }) => {
             end: timeUtilities.fromDateTime(end),
           });
       }}
+      {...other}
     ></MantineTimeRangeInput>
   );
 };

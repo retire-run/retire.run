@@ -14,7 +14,7 @@ import {
 } from "@mantine/core";
 import { FunctionComponent, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { FiTrash } from "react-icons/fi";
+import { FiEyeOff, FiTrash, FiUserPlus } from "react-icons/fi";
 import TimeRangeInput from "./TimeRangeInput";
 
 interface Props {
@@ -72,6 +72,7 @@ const Editor: FunctionComponent<Props> = ({ onCommit }) => {
         ></RangeSlider>
         <Space h="lg"></Space>
         <TimeRangeInput
+          icon={<FiUserPlus />}
           value={{ start: workStart, end: workEnd }}
           onChange={({ start, end }) => {
             setWorkStart(start);
@@ -111,8 +112,10 @@ const Editor: FunctionComponent<Props> = ({ onCommit }) => {
         {breaks.map((value, i) => (
           <div key={`break-time-${i}-${value.start}-${value.end}`}>
             <Space h="sm"></Space>
-            <Group position="center">
+            <Group>
               <TimeRangeInput
+                icon={<FiEyeOff />}
+                withSeconds
                 value={value}
                 onChange={(val) => {
                   setBreaks((s) => {
