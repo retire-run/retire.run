@@ -49,17 +49,12 @@ const Visualizer: FunctionComponent = () => {
         value={estimatedPercentage * 100.0}
       ></Progress>
       <Space h="xl"></Space>
-      <p>
-        <Text>
-          {t("estimated-salary-desc")} {salaryPerDay} {currency}
-        </Text>
-      </p>
-      <p>
-        <Text>
-          {t("total-collected-desc")} {totalCollectedMoney.toFixed(2)}{" "}
-          {currency}
-        </Text>
-      </p>
+      <Text>
+        {t("estimated-salary-desc")} {salaryPerDay} {currency}
+      </Text>
+      <Text>
+        {t("total-collected-desc")} {totalCollectedMoney.toFixed(2)} {currency}
+      </Text>
     </div>
   );
 };

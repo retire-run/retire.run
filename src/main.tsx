@@ -1,15 +1,16 @@
 import "@/i18n";
 import "@/styles/globals.css";
 import React from "react";
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
 import App from "./App";
 import ErrorBoundary from "./components/ErrorBoundary";
 
-ReactDOM.render(
+const rootElement = document.getElementById("root")!;
+
+ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
     <ErrorBoundary>
       <App></App>
     </ErrorBoundary>
-  </React.StrictMode>,
-  document.getElementById("root")
+  </React.StrictMode>
 );
