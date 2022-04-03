@@ -5,6 +5,7 @@ import {
 } from "@/constants";
 import { useInterval, useLocalStorage } from "@mantine/hooks";
 import { useEffect, useMemo, useState } from "react";
+import { clamp } from ".";
 import { getTotalHours } from "./time";
 
 export function useSaveData() {
@@ -22,6 +23,23 @@ export function useSaveData() {
       working_days: 20,
     },
   });
+}
+
+export function useTotalMoney(collected: number) {
+  const [current, setCurrent] = useState(collected);
+  const [total, setTotal] = useLocalStorage<number>({
+    key: "retire-total-money",
+    defaultValue: 0,
+  });
+  useEffect(() => {
+    if (current !== collected) {
+      const delta = clamp(collected - current, 0, Number.POSITIVE_INFINITY);
+      setCurrent(collected);
+      setTotal((v) => v + delta);
+    }
+  }, [collected, current, setTotal]);
+
+  return total;
 }
 
 export function useLiveTime() {

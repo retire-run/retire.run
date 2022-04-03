@@ -20,6 +20,7 @@
     "visualizer": {
       "title": "一起摸鱼 🐡",
       "estimated-salary-desc": "今天预计可以赚",
+      "total-collected-desc": "你已经赚了",
       "available": "已达成"
     }
   }

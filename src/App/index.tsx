@@ -27,7 +27,7 @@ const App: FunctionComponent = () => {
         <Header height={50} p="xs">
           <Group position="apart" px={20}>
             <Text>{t("title")}</Text>
-            <Menu trigger="hover">
+            <Menu>
               <Menu.Label>{t("menu-label")}</Menu.Label>
               <Menu.Item
                 icon={<FiSettings></FiSettings>}

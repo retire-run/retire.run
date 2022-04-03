@@ -1,7 +1,12 @@
 import { clamp } from "@/utilities";
-import { useLiveTime, useSaveData, useStatistics } from "@/utilities/hooks";
+import {
+  useLiveTime,
+  useSaveData,
+  useStatistics,
+  useTotalMoney,
+} from "@/utilities/hooks";
 import { getTotalHours } from "@/utilities/time";
-import { Progress, Space, Title } from "@mantine/core";
+import { Group, Progress, Space, Text, Title } from "@mantine/core";
 import { useDocumentTitle } from "@mantine/hooks";
 import { FunctionComponent } from "react";
 import { useTranslation } from "react-i18next";
@@ -21,27 +26,39 @@ const Visualizer: FunctionComponent = () => {
 
   const moneyAvailable = estimatedPercentage >= 1.0;
 
+  const collectedMoney = estimatedPercentage * salaryPerDay;
+  const totalCollectedMoney = useTotalMoney(collectedMoney);
+
   useDocumentTitle(
-    `💰 ${(estimatedPercentage * salaryPerDay).toFixed(2)} ${
+    `💰 ${collectedMoney.toFixed(2)} ${
       moneyAvailable ? t("available") : "-UNIT-"
     }`
   );
 
   return (
     <div>
-      <Title order={3}>{t("title")}</Title>
+      <Group position="apart">
+        <Title order={3}>{t("title")}</Title>
+        <Text color="gray">{percentStr}</Text>
+      </Group>
       <Space h="xl"></Space>
       <Progress
-        label={percentStr}
         size="lg"
         striped={!moneyAvailable}
         animate={!moneyAvailable}
         value={estimatedPercentage * 100.0}
       ></Progress>
       <Space h="xl"></Space>
-      <span>
-        {t("estimated-salary-desc")} {salaryPerDay} -UNIT-
-      </span>
+      <p>
+        <Text>
+          {t("estimated-salary-desc")} {salaryPerDay} -UNIT-
+        </Text>
+      </p>
+      <p>
+        <Text>
+          {t("total-collected-desc")} {totalCollectedMoney.toFixed(2)} -UNIT-
+        </Text>
+      </p>
     </div>
   );
 };
