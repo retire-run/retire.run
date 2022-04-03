@@ -84,6 +84,10 @@ const Editor: FunctionComponent<Props> = ({ onCommit }) => {
     onCommit();
   };
 
+  const [boringCount, setBoringCount] = useState(0);
+
+  const showSoulSwitch = boringCount > 10 || saveData.soul_mode;
+
   const { t } = useTranslation("editor");
 
   return (
@@ -201,17 +205,23 @@ const Editor: FunctionComponent<Props> = ({ onCommit }) => {
             {t("run-button")}
           </Button>
           <div hidden={soulMode}>
-            <Button color="gray" variant="light" onClick={commit}>
+            <Button
+              color="gray"
+              variant="light"
+              onClick={() => setBoringCount((v) => v + 1)}
+            >
               {t("feeling-boring-button")}
             </Button>
           </div>
         </Group>
-        <Switch
-          color="red"
-          label={t("sell-soul-switch")}
-          checked={soulMode}
-          onChange={({ currentTarget: { checked } }) => setSoulMode(checked)}
-        ></Switch>
+        <div hidden={!showSoulSwitch}>
+          <Switch
+            color="red"
+            label={t("sell-soul-switch")}
+            checked={soulMode}
+            onChange={({ currentTarget: { checked } }) => setSoulMode(checked)}
+          ></Switch>
+        </div>
       </Group>
     </>
   );
