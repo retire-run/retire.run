@@ -11,5 +11,6 @@
     "plugin:react-hooks/recommended",
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended"
-  ]
+  ],
+  "ignorePatterns": ["node_modules/", "dist/", "*.json"]
 }
