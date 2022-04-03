@@ -24,7 +24,11 @@ function renderChunks(deps: Record<string, string>) {
 export default defineConfig({
   plugins: [
     react(),
-    VitePWA(),
+    VitePWA({
+      // TODO
+      // includeAssets: [],
+      // manifest: {}
+    }),
     checker({
       typescript: true,
       eslint: {
