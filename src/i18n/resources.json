@@ -6,14 +6,14 @@
     "app": {
       "title": "retire.run",
       "menu-label": "灵魂献祭",
-      "menu-settings-btn": "设置",
-      "menu-sell-soul-btn": "将灵魂献祭给恶魔"
+      "menu-settings-btn": "设置"
     },
     "editor": {
       "title": "你正在成功",
       "break-button": "添加休息时间",
       "salary-label": "月薪资",
       "work-days-label": "每月工作天数",
+      "sell-soul-switch": "我愿意将灵魂出售给恶魔",
       "run-button": "润",
       "feeling-boring-button": "好无聊，好想回家"
     },

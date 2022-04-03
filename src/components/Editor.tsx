@@ -9,6 +9,7 @@ import {
   NumberInput,
   RangeSlider,
   Space,
+  Switch,
   Text,
   Title,
 } from "@mantine/core";
@@ -158,9 +159,16 @@ const Editor: FunctionComponent<Props> = ({ onCommit }) => {
         </Group>
       </div>
       <Space h="xl"></Space>
-      <Group>
-        <Button onClick={commit}>{t("run-button")}</Button>
-        <Button onClick={commit}>{t("feeling-boring-button")}</Button>
+      <Group position="apart">
+        <Group>
+          <Button color="green" onClick={commit}>
+            {t("run-button")}
+          </Button>
+          <Button color="gray" variant="light" onClick={commit}>
+            {t("feeling-boring-button")}
+          </Button>
+        </Group>
+        <Switch color="red" label={t("sell-soul-switch")}></Switch>
       </Group>
     </>
   );

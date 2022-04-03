@@ -4,7 +4,6 @@ import { useSaveData } from "@/utilities/hooks";
 import {
   AppShell,
   Container,
-  Divider,
   Group,
   Header,
   Menu,
@@ -13,13 +12,15 @@ import {
 } from "@mantine/core";
 import { FunctionComponent, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { FiDollarSign, FiSettings } from "react-icons/fi";
+import { FiSettings } from "react-icons/fi";
 
 const App: FunctionComponent = () => {
   const [saveData] = useSaveData();
   const [editMode, setEditMode] = useState(!saveData.edited);
 
   const { t } = useTranslation("app");
+
+  const modalCloseable = saveData.edited;
 
   return (
     <AppShell
@@ -35,14 +36,6 @@ const App: FunctionComponent = () => {
               >
                 {t("menu-settings-btn")}
               </Menu.Item>
-              <Divider></Divider>
-              <Menu.Item
-                color="red"
-                disabled
-                icon={<FiDollarSign></FiDollarSign>}
-              >
-                {t("menu-sell-soul-btn")}
-              </Menu.Item>
             </Menu>
           </Group>
         </Header>
@@ -56,8 +49,8 @@ const App: FunctionComponent = () => {
           onClose={() => setEditMode(false)}
           centered
           withCloseButton={false}
-          closeOnClickOutside={false}
-          closeOnEscape={false}
+          closeOnClickOutside={modalCloseable}
+          closeOnEscape={modalCloseable}
         >
           <Editor onCommit={() => setEditMode(false)}></Editor>
         </Modal>
