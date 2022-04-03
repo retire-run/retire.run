@@ -17,4 +17,5 @@ interface SaveData {
   breaks: TimeRange[];
   salary: number;
   working_days: number;
+  currency: string;
 }

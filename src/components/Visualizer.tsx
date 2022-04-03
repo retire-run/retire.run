@@ -15,7 +15,7 @@ const Visualizer: FunctionComponent = () => {
   const [saveData] = useSaveData();
   const { salaryPerDay, workingHours } = useStatistics();
 
-  const { workTime } = saveData;
+  const { workTime, currency } = saveData;
   const time = useLiveTime();
 
   const estimatedHours = getTotalHours(workTime.start, time);
@@ -31,7 +31,7 @@ const Visualizer: FunctionComponent = () => {
 
   useDocumentTitle(
     `💰 ${collectedMoney.toFixed(2)} ${
-      moneyAvailable ? t("available") : "-UNIT-"
+      moneyAvailable ? t("available") : currency
     }`
   );
 
@@ -51,12 +51,13 @@ const Visualizer: FunctionComponent = () => {
       <Space h="xl"></Space>
       <p>
         <Text>
-          {t("estimated-salary-desc")} {salaryPerDay} -UNIT-
+          {t("estimated-salary-desc")} {salaryPerDay} {currency}
         </Text>
       </p>
       <p>
         <Text>
-          {t("total-collected-desc")} {totalCollectedMoney.toFixed(2)} -UNIT-
+          {t("total-collected-desc")} {totalCollectedMoney.toFixed(2)}{" "}
+          {currency}
         </Text>
       </p>
     </div>

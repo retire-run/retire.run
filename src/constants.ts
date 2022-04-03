@@ -4,6 +4,9 @@ export const RetireRefreshRate = 1000;
 
 export const RetireSaveDataKey = "retire-save-data";
 
+export const RetireCurrencyList: string[] = ["CNY", "USD", "CAN", "EUR", "BTC"];
+export const RetireFallbackCurrency = RetireCurrencyList[0];
+
 export const RetireDefaultSaveData: SaveData = {
   version: RetireVersion,
   edited: false,
@@ -15,4 +18,5 @@ export const RetireDefaultSaveData: SaveData = {
   breaks: [],
   salary: 0,
   working_days: 20,
+  currency: RetireFallbackCurrency,
 };

@@ -1,4 +1,9 @@
-import { RetireDefaultSaveData, RetireVersion } from "@/constants";
+import {
+  RetireCurrencyList,
+  RetireDefaultSaveData,
+  RetireFallbackCurrency,
+  RetireVersion,
+} from "@/constants";
 import { useSaveData } from "@/utilities/hooks";
 import { timeUtilities } from "@/utilities/time";
 import {
@@ -6,6 +11,7 @@ import {
   Button,
   Divider,
   Group,
+  NativeSelect,
   NumberInput,
   RangeSlider,
   Space,
@@ -24,6 +30,7 @@ interface Props {
 
 const Editor: FunctionComponent<Props> = ({ onCommit }) => {
   const [saveData, setSaveData] = useSaveData();
+
   const [soulMode, setSoulModeInternal] = useState(saveData.soul_mode);
 
   const setSoulMode = useCallback(
@@ -42,6 +49,7 @@ const Editor: FunctionComponent<Props> = ({ onCommit }) => {
           breaks: [],
           salary: 0,
           working_days: 31,
+          currency: RetireFallbackCurrency,
         });
       } else {
         setSaveData(RetireDefaultSaveData);
@@ -57,6 +65,7 @@ const Editor: FunctionComponent<Props> = ({ onCommit }) => {
     setSalary(saveData.salary);
     setWorkDays(saveData.working_days);
     setSoulModeInternal(saveData.soul_mode);
+    setCurrency(saveData.currency);
   }, [saveData]);
 
   const [workStart, setWorkStart] = useState(saveData.workTime.start);
@@ -66,6 +75,7 @@ const Editor: FunctionComponent<Props> = ({ onCommit }) => {
 
   const [salary, setSalary] = useState(saveData.salary);
   const [workDays, setWorkDays] = useState(saveData.working_days);
+  const [currency, setCurrency] = useState(saveData.currency);
 
   const commit = () => {
     setSaveData({
@@ -79,6 +89,7 @@ const Editor: FunctionComponent<Props> = ({ onCommit }) => {
       breaks,
       salary,
       working_days: workDays,
+      currency,
     });
 
     onCommit();
@@ -185,14 +196,32 @@ const Editor: FunctionComponent<Props> = ({ onCommit }) => {
       <Divider my="xl"></Divider>
       <div>
         <Group grow>
-          <NumberInput
-            value={salary}
-            label={t("salary-label")}
-            hideControls
-            onChange={(value) => setSalary(value ?? 0)}
-          ></NumberInput>
+          <div>
+            <NumberInput
+              value={salary}
+              min={0}
+              label={t("salary-label")}
+              hideControls
+              onChange={(value) => setSalary(value ?? 0)}
+              styles={{ rightSection: { width: "3rem" } }}
+              rightSection={
+                <NativeSelect
+                  style={{ width: "100%" }}
+                  variant="unstyled"
+                  size="xs"
+                  data={RetireCurrencyList}
+                  value={currency}
+                  onChange={({ currentTarget: { value } }) =>
+                    setCurrency(value)
+                  }
+                ></NativeSelect>
+              }
+            ></NumberInput>
+          </div>
           <NumberInput
             value={workDays}
+            min={0}
+            max={31}
             label={t("work-days-label")}
             onChange={(value) => setWorkDays(value ?? 0)}
           ></NumberInput>
@@ -204,7 +233,7 @@ const Editor: FunctionComponent<Props> = ({ onCommit }) => {
           <Button color={soulMode ? "red" : "green"} onClick={commit}>
             {t("run-button")}
           </Button>
-          <div hidden={soulMode}>
+          <div hidden={showSoulSwitch}>
             <Button
               color="gray"
               variant="light"
