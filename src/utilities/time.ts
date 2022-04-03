@@ -1,12 +1,24 @@
+import { clamp } from ".";
+
 export const timeUtilities = {
   serialize: (time: Time): number => {
     return toMinutes(time);
   },
   deserialize: (inValue: number): Time => {
-    const hour = Math.floor(inValue / 60);
+    const hour = clamp(Math.floor(inValue / 60), 0, 23);
     const minute = inValue % 60;
 
     return { hour, minute, second: 0 };
+  },
+  toDateTime(time: Time): Date {
+    return new Date(0, 0, 0, time.hour, time.minute, time.second);
+  },
+  fromDateTime(date: Date): Time {
+    return {
+      hour: date.getHours(),
+      minute: date.getMinutes(),
+      second: date.getSeconds(),
+    };
   },
 };
 

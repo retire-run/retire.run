@@ -1,9 +1,9 @@
 import { clamp } from "@/utilities";
 import { useLiveTime, useSaveData, useStatistics } from "@/utilities/hooks";
-import { getTotalHours, timeUtilities } from "@/utilities/time";
+import { getTotalHours } from "@/utilities/time";
 import { Progress, Space, Title } from "@mantine/core";
 import { useDocumentTitle } from "@mantine/hooks";
-import { FunctionComponent, useMemo } from "react";
+import { FunctionComponent } from "react";
 import { useTranslation } from "react-i18next";
 
 const Visualizer: FunctionComponent = () => {
@@ -12,12 +12,8 @@ const Visualizer: FunctionComponent = () => {
 
   const { workTime } = saveData;
   const time = useLiveTime();
-  const startWorkTime = useMemo(
-    () => timeUtilities.deserialize(workTime.start),
-    [workTime.start]
-  );
 
-  const estimatedHours = getTotalHours(startWorkTime, time);
+  const estimatedHours = getTotalHours(workTime.start, time);
   const estimatedPercentage = clamp(estimatedHours / workingHours, 0, 1);
   const percentStr = `${(estimatedPercentage * 100).toFixed(4)}%`;
 

@@ -1,45 +1,24 @@
-import { timeUtilities, toMinutes } from "@/utilities/time";
-import { NumberInput } from "@mantine/core";
+import { timeUtilities } from "@/utilities/time";
+import {
+  TimeInput as MantineTimeInput,
+  TimeInputProps as MantineTimeInputProps,
+} from "@mantine/dates";
 import { FunctionComponent } from "react";
 
-interface Props {
+type Props = Omit<MantineTimeInputProps, "value" | "onChange"> & {
   value: Time;
   onChange?: (value: Time) => void;
-}
+};
 
-const TimeInput: FunctionComponent<Props> = ({
-  value,
-  onChange: onChanged,
-}) => {
+const TimeInput: FunctionComponent<Props> = ({ value, onChange, ...other }) => {
   return (
-    <NumberInput
-      value={toMinutes(value)}
-      parser={(value) => {
-        if (value) {
-          const [hour, minute] = value.split(":");
-          return timeUtilities
-            .serialize({
-              hour: parseInt(hour),
-              minute: parseInt(minute),
-              second: 0,
-            })
-            .toString();
-        }
-        return value;
-      }}
-      formatter={(value) => {
-        if (value && !isNaN(parseInt(value))) {
-          const time = timeUtilities.deserialize(parseInt(value));
-          const hourStr = time.hour.toString().padStart(2, "0");
-          const minuteStr = time.minute.toString().padStart(2, "0");
-          return `${hourStr}:${minuteStr}`;
-        }
-        return "00:00";
-      }}
+    <MantineTimeInput
+      value={timeUtilities.toDateTime(value)}
       onChange={(value) =>
-        onChanged && onChanged(timeUtilities.deserialize(value ?? 0))
+        onChange && onChange(timeUtilities.fromDateTime(value))
       }
-    ></NumberInput>
+      {...other}
+    ></MantineTimeInput>
   );
 };
 

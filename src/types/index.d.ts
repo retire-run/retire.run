@@ -5,8 +5,8 @@ interface Time {
 }
 
 interface TimeRange {
-  start: number;
-  end: number;
+  start: Time;
+  end: Time;
 }
 
 interface SaveData {

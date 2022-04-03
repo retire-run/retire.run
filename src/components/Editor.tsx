@@ -58,10 +58,14 @@ const Editor: FunctionComponent<Props> = ({ onCommit }) => {
         <RangeSlider
           min={0}
           max={1440}
-          value={[workStart, workEnd]}
+          value={[
+            timeUtilities.serialize(workStart),
+            timeUtilities.serialize(workEnd),
+          ]}
           onChange={(value) => {
-            setWorkStart(value[0]);
-            setWorkEnd(value[1]);
+            const [start, end] = value;
+            setWorkStart(timeUtilities.deserialize(start));
+            setWorkEnd(timeUtilities.deserialize(end));
           }}
           showLabelOnHover={false}
           label={null}
@@ -83,23 +87,20 @@ const Editor: FunctionComponent<Props> = ({ onCommit }) => {
           variant="light"
           onClick={() =>
             setBreaks((s) => {
-              const startHour =
-                s.length > 0
-                  ? timeUtilities.deserialize(s[s.length - 1].end).hour
-                  : 12;
+              const hour = s.length > 0 ? s[s.length - 1].end.hour : 12;
               return [
                 ...s,
                 {
-                  start: timeUtilities.serialize({
-                    hour: startHour,
+                  start: {
+                    hour,
                     minute: 0,
                     second: 0,
-                  }),
-                  end: timeUtilities.serialize({
-                    hour: startHour + 1,
+                  },
+                  end: {
+                    hour: hour + 1,
                     minute: 0,
                     second: 0,
-                  }),
+                  },
                 },
               ];
             })

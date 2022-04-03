@@ -5,7 +5,7 @@ import {
 } from "@/constants";
 import { useInterval, useLocalStorage } from "@mantine/hooks";
 import { useEffect, useMemo, useState } from "react";
-import { getTotalHours, timeUtilities } from "./time";
+import { getTotalHours } from "./time";
 
 export function useSaveData() {
   return useLocalStorage<SaveData>({
@@ -14,8 +14,8 @@ export function useSaveData() {
       version: RetireVersion,
       edited: false,
       workTime: {
-        start: timeUtilities.serialize({ hour: 9, minute: 0, second: 0 }),
-        end: timeUtilities.serialize({ hour: 18, minute: 0, second: 0 }),
+        start: { hour: 9, minute: 0, second: 0 },
+        end: { hour: 18, minute: 0, second: 0 },
       },
       breaks: [],
       salary: 0,
@@ -61,18 +61,10 @@ export function useStatistics() {
 
     const salaryPerDay = salary / working_days;
 
-    const workingHours = getTotalHours(
-      timeUtilities.deserialize(workTime.start),
-      timeUtilities.deserialize(workTime.end)
-    );
+    const workingHours = getTotalHours(workTime.start, workTime.end);
 
     const totalBreakHours = breaks.reduce(
-      (total, b) =>
-        total +
-        getTotalHours(
-          timeUtilities.deserialize(b.start),
-          timeUtilities.deserialize(b.end)
-        ),
+      (total, b) => total + getTotalHours(b.start, b.end),
       0
     );
 

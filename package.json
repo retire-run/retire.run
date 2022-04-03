@@ -22,6 +22,7 @@
   },
   "devDependencies": {
     "@mantine/core": "^4.1.1",
+    "@mantine/dates": "^4.1.1",
     "@mantine/hooks": "^4.1.1",
     "@types/node": "latest",
     "@types/react": "latest",
