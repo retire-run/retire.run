@@ -18,18 +18,16 @@
     "react": "latest",
     "react-dom": "latest",
     "react-i18next": "^11.16.2",
-    "react-icons": "latest"
-  },
-  "devDependencies": {
+    "react-icons": "latest",
     "@mantine/core": "^4.1.1",
     "@mantine/dates": "^4.1.1",
-    "@mantine/hooks": "^4.1.1",
+    "@mantine/hooks": "^4.1.1"
+  },
+  "devDependencies": {
     "@types/node": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
     "@vitejs/plugin-react": "latest",
-    "autoprefixer": "latest",
-    "clsx": "latest",
     "eslint": "latest",
     "eslint-config-react-app": "latest",
     "eslint-plugin-react-hooks": "latest",
@@ -39,7 +37,7 @@
     "pretty-quick": "latest",
     "typescript": "latest",
     "vite": "latest",
-    "vite-plugin-checker": "latest",
-    "vite-plugin-pwa": "^0.11.13"
+    "vite-plugin-checker": "^0.3",
+    "vite-plugin-pwa": "latest"
   }
 }
