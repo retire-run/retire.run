@@ -2,7 +2,7 @@ import { clamp } from ".";
 
 export const timeUtilities = {
   serialize: (time: Time): number => {
-    return toMinutes(time);
+    return time.hour * 60 + time.minute;
   },
   deserialize: (inValue: number): Time => {
     const hour = clamp(Math.floor(inValue / 60), 0, 23);

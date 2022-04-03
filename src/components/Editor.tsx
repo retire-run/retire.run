@@ -108,7 +108,7 @@ const Editor: FunctionComponent<Props> = ({ onCommit }) => {
       <div>
         <RangeSlider
           min={0}
-          max={1440}
+          max={24 * 60}
           value={[
             timeUtilities.serialize(workStart),
             timeUtilities.serialize(workEnd),
