@@ -16,7 +16,7 @@ export const RetireDefaultSaveData: SaveData = {
     end: { hour: 18, minute: 0, second: 0 },
   },
   breaks: [],
-  salary: 0,
+  salary: 1636,
   working_days: 20,
   currency: RetireFallbackCurrency,
 };
