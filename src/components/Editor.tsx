@@ -174,7 +174,7 @@ const Editor: FunctionComponent<Props> = ({ onCommit }) => {
           <div key={`break-time-${i}-${value.start}-${value.end}`}>
             <Space h="sm"></Space>
             <Grid grow align="center">
-              <Grid.Col span={11}>
+              <Grid.Col md={11} span={10}>
                 <TimeRangeInput
                   icon={<FiEyeOff />}
                   withSeconds
