@@ -21,7 +21,6 @@ import {
   Space,
   Switch,
   Text,
-  Title,
 } from "@mantine/core";
 import { FunctionComponent, useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -113,8 +112,6 @@ const Editor: FunctionComponent<Props> = ({ onCommit }) => {
 
   return (
     <>
-      <Title order={3}>{soulMode ? t("title-soul-mode") : t("title")}</Title>
-      <Space h="xl"></Space>
       <div>
         <RangeSlider
           color={soulMode ? SoulModeColor : undefined}
@@ -290,7 +287,7 @@ const Editor: FunctionComponent<Props> = ({ onCommit }) => {
           ></Switch>
         </div>
         <Modal
-          title={`${t("salary-select-title")} (${currency})`}
+          title={`${t("salary-selector-title", { ns: "app", currency })}`}
           size="xl"
           opened={salaryModalOpened}
           onClose={() => {

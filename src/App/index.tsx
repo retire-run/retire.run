@@ -10,6 +10,7 @@ import {
   Menu,
   Modal,
   Text,
+  Title,
 } from "@mantine/core";
 import { useLocalStorage } from "@mantine/hooks";
 import { FunctionComponent, useEffect, useState } from "react";
@@ -61,9 +62,16 @@ const App: FunctionComponent = () => {
             size="lg"
             onClose={() => setEditMode(false)}
             centered
-            withCloseButton={false}
+            withCloseButton={modalCloseable}
             closeOnClickOutside={modalCloseable}
             closeOnEscape={modalCloseable}
+            title={
+              <Title order={3}>
+                {saveData.soul_mode
+                  ? t("editor-soul-mode-title")
+                  : t("editor-title")}
+              </Title>
+            }
           >
             <SaveDataMutationContext.Provider value={setSaveData}>
               <Editor onCommit={() => setEditMode(false)}></Editor>

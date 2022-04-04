@@ -32,20 +32,20 @@
   "zh": {
     "app": {
       "title": "退休，跑！",
+      "editor-title": "⚙️ 设置",
+      "editor-soul-mode-title": "你正在成功",
+      "salary-selector-title": "选择薪资 ({{currency}})",
       "menu-label": "灵魂献祭",
       "menu-settings-btn": "设置"
     },
     "editor": {
-      "title": "⚙️ 设置",
-      "title-soul-mode": "你正在成功",
       "break-button": "添加休息时间",
       "salary-label": "月薪资",
       "work-days-label": "每月工作天数",
       "sell-soul-switch": "我愿意将灵魂出售给恶魔",
       "soul-mode-set-salary-btn": "设置薪资",
       "run-button": "润",
-      "feeling-boring-button": "好无聊，好想回家",
-      "salary-select-title": "选择薪资"
+      "feeling-boring-button": "好无聊，好想回家"
     },
     "visualizer": {
       "title": "一起摸鱼 🐡",
