@@ -1,10 +1,37 @@
 {
   "en": {
-    "translation": {}
+    "app": {
+      "title": "retire.run",
+      "menu-label": "Menu",
+      "menu-settings-btn": "Settings"
+    },
+    "editor": {
+      "title": "⚙️ Settings",
+      "title-soul-mode": "你正在成功",
+      "break-button": "Add Break Time",
+      "salary-label": "Salary Per Month",
+      "work-days-label": "Working Days Per Month",
+      "sell-soul-switch": "I'm will to sell my soul to daemon",
+      "soul-mode-set-salary-btn": "Select Salary",
+      "run-button": "Run",
+      "feeling-boring-button": "I'm Feeling Boring",
+      "salary-select-title": "Select Your Salary"
+    },
+    "visualizer": {
+      "title": "Touch Fish Together 🐡",
+      "doc-title": "💰 {{money}} {{currency}}",
+      "after-work-doc-title": "💰 {{money}} AVAILABLE",
+      "salary-desc": "今天预计可以赚 {{salary}}",
+      "after-work-salary-desc": "今天已经赚了 {{salary}}, 为什么还不下班！",
+      "total-collected-desc": "你总共赚了 {{totalSalary}}"
+    },
+    "salary-selector": {
+      "regenerate-btn": "Don't Like This？ Shuffle The Salary"
+    }
   },
   "zh": {
     "app": {
-      "title": "retire.run",
+      "title": "退休，跑！",
       "menu-label": "灵魂献祭",
       "menu-settings-btn": "设置"
     },
@@ -23,7 +50,7 @@
     "visualizer": {
       "title": "一起摸鱼 🐡",
       "doc-title": "💰 {{money}} {{currency}}",
-      "after-work-doc-title": "💰 {{money}} 打成",
+      "after-work-doc-title": "💰 {{money}} 达成",
       "salary-desc": "今天预计可以赚 {{salary}}",
       "after-work-salary-desc": "今天已经赚了 {{salary}}, 为什么还不下班！",
       "total-collected-desc": "你总共赚了 {{totalSalary}}"
