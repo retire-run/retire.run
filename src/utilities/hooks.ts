@@ -1,18 +1,16 @@
-import {
-  RetireDefaultSaveData,
-  RetireRefreshRate,
-  RetireSaveDataKey,
-} from "@/constants";
+import { RetireRefreshRate } from "@/constants";
 import { useInterval, useLocalStorage } from "@mantine/hooks";
-import { useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { clamp } from ".";
+import { SaveDataContext, SaveDataMutationContext } from "./context";
 import { getTotalHours } from "./time";
 
 export function useSaveData() {
-  return useLocalStorage<SaveData>({
-    key: RetireSaveDataKey,
-    defaultValue: RetireDefaultSaveData,
-  });
+  return useContext(SaveDataContext);
+}
+
+export function useSaveDataMutation() {
+  return useContext(SaveDataMutationContext);
 }
 
 export function useTotalMoney(collected: number) {
@@ -62,7 +60,7 @@ export function useLiveTime() {
 }
 
 export function useStatistics() {
-  const [saveData] = useSaveData();
+  const saveData = useSaveData();
 
   return useMemo(() => {
     const { workTime, breaks, salary, working_days } = saveData;

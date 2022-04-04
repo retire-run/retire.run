@@ -5,7 +5,7 @@ import {
   RetireVersion,
 } from "@/constants";
 import { clamp } from "@/utilities";
-import { useSaveData } from "@/utilities/hooks";
+import { useSaveData, useSaveDataMutation } from "@/utilities/hooks";
 import { timeUtilities } from "@/utilities/time";
 import {
   ActionIcon,
@@ -36,7 +36,8 @@ interface Props {
 }
 
 const Editor: FunctionComponent<Props> = ({ onCommit }) => {
-  const [saveData, setSaveData] = useSaveData();
+  const saveData = useSaveData();
+  const setSaveData = useSaveDataMutation();
 
   const [soulMode, setSoulModeInternal] = useState(saveData.soul_mode);
 

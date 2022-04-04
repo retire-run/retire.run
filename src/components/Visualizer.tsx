@@ -12,7 +12,7 @@ import { FunctionComponent } from "react";
 import { Trans, useTranslation } from "react-i18next";
 
 const Visualizer: FunctionComponent = () => {
-  const [saveData] = useSaveData();
+  const saveData = useSaveData();
   const { salaryPerDay, workingHours } = useStatistics();
 
   const { workTime, currency } = saveData;
