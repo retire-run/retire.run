@@ -5,7 +5,7 @@ export const timeUtilities = {
     return time.hour * 60 + time.minute;
   },
   deserialize: (inValue: number): Time => {
-    const hour = clamp(Math.floor(inValue / 60), 0, 23);
+    const hour = clamp(Math.floor(inValue / 60), 0, 24);
     const minute = inValue % 60;
 
     return { hour, minute, second: 0 };

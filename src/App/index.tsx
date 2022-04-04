@@ -55,29 +55,27 @@ const App: FunctionComponent = () => {
           </Header>
         }
       >
-        <Container>
-          {!editMode && <Visualizer></Visualizer>}
-          <Modal
-            opened={editMode}
-            size="lg"
-            onClose={() => setEditMode(false)}
-            centered
-            withCloseButton={modalCloseable}
-            closeOnClickOutside={modalCloseable}
-            closeOnEscape={modalCloseable}
-            title={
-              <Title order={3}>
-                {saveData.soul_mode
-                  ? t("editor-soul-mode-title")
-                  : t("editor-title")}
-              </Title>
-            }
-          >
-            <SaveDataMutationContext.Provider value={setSaveData}>
-              <Editor onCommit={() => setEditMode(false)}></Editor>
-            </SaveDataMutationContext.Provider>
-          </Modal>
-        </Container>
+        <Container>{saveData.edited && <Visualizer></Visualizer>}</Container>
+        <Modal
+          opened={editMode}
+          size="lg"
+          onClose={() => setEditMode(false)}
+          centered
+          withCloseButton={modalCloseable}
+          closeOnClickOutside={modalCloseable}
+          closeOnEscape={modalCloseable}
+          title={
+            <Title order={3}>
+              {saveData.soul_mode
+                ? t("editor-soul-mode-title")
+                : t("editor-title")}
+            </Title>
+          }
+        >
+          <SaveDataMutationContext.Provider value={setSaveData}>
+            <Editor onCommit={() => setEditMode(false)}></Editor>
+          </SaveDataMutationContext.Provider>
+        </Modal>
       </AppShell>
     </SaveDataContext.Provider>
   );
