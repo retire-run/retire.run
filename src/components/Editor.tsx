@@ -113,6 +113,9 @@ const Editor: FunctionComponent<Props> = ({ onCommit }) => {
 
   return (
     <>
+      <Text pb={24} size="sm" hidden={saveData.edited}>
+        {t("description")}
+      </Text>
       <Stack>
         <TimeRangeInput
           label={t("work-time-label")}
