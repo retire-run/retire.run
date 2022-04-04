@@ -113,6 +113,16 @@ const Editor: FunctionComponent<Props> = ({ onCommit }) => {
   return (
     <>
       <div>
+        <TimeRangeInput
+          label={t("work-time-label")}
+          icon={<FiUserPlus />}
+          value={{ start: workStart, end: workEnd }}
+          onChange={({ start, end }) => {
+            setWorkStart(start);
+            setWorkEnd(end);
+          }}
+        ></TimeRangeInput>
+        <Space h="lg"></Space>
         <RangeSlider
           color={soulMode ? SoulModeColor : undefined}
           min={0}
@@ -134,15 +144,6 @@ const Editor: FunctionComponent<Props> = ({ onCommit }) => {
           showLabelOnHover={false}
           label={null}
         ></RangeSlider>
-        <Space h="lg"></Space>
-        <TimeRangeInput
-          icon={<FiUserPlus />}
-          value={{ start: workStart, end: workEnd }}
-          onChange={({ start, end }) => {
-            setWorkStart(start);
-            setWorkEnd(end);
-          }}
-        ></TimeRangeInput>
       </div>
       <Divider my="xl"></Divider>
       <div>

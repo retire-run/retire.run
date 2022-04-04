@@ -40,6 +40,7 @@
     },
     "editor": {
       "break-button": "添加休息时间",
+      "work-time-label": "上班 / 下班时间",
       "salary-label": "月薪资",
       "work-days-label": "每月工作天数",
       "sell-soul-switch": "我愿意将灵魂出售给恶魔",
