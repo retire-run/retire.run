@@ -22,9 +22,11 @@
     },
     "visualizer": {
       "title": "一起摸鱼 🐡",
-      "estimated-salary-desc": "今天预计可以赚",
-      "total-collected-desc": "你已经赚了",
-      "available": "已达成"
+      "doc-title": "💰 {{money}} {{currency}}",
+      "after-work-doc-title": "💰 {{money}} 打成",
+      "salary-desc": "今天预计可以赚 {{salary}}",
+      "after-work-salary-desc": "今天已经赚了 {{salary}}, 为什么还不下班！",
+      "total-collected-desc": "你总共赚了 {{totalSalary}}"
     },
     "salary-selector": {
       "regenerate-btn": "不喜欢？换一批薪资"

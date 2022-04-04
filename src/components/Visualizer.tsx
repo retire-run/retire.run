@@ -9,7 +9,7 @@ import { getTotalHours } from "@/utilities/time";
 import { Group, Progress, Space, Text, Title } from "@mantine/core";
 import { useDocumentTitle } from "@mantine/hooks";
 import { FunctionComponent } from "react";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 
 const Visualizer: FunctionComponent = () => {
   const [saveData] = useSaveData();
@@ -24,16 +24,29 @@ const Visualizer: FunctionComponent = () => {
 
   const { t } = useTranslation("visualizer");
 
-  const moneyAvailable = estimatedPercentage >= 1.0;
+  const isBeforeWorkTime = estimatedPercentage <= 0.0;
+  const isAfterWorkTime = estimatedPercentage >= 1.0;
+  const isWorkTime = !isBeforeWorkTime && !isAfterWorkTime;
 
   const collectedMoney = estimatedPercentage * salaryPerDay;
   const totalCollectedMoney = useTotalMoney(collectedMoney);
 
   useDocumentTitle(
-    `💰 ${collectedMoney.toFixed(2)} ${
-      moneyAvailable ? t("available") : currency
-    }`
+    t(isAfterWorkTime ? "after-work-doc-title" : "doc-title", {
+      money: collectedMoney.toFixed(2),
+      currency,
+    })
   );
+
+  // useDocumentTitle(
+  //   `💰 ${collectedMoney.toFixed(2)} ${
+  //     isAfterWorkTime ? t("after-work-title-suffix") : currency
+  //   }`
+  // );
+
+  const descriptionKey = isAfterWorkTime
+    ? "after-work-salary-desc"
+    : "salary-desc";
 
   return (
     <div>
@@ -44,16 +57,26 @@ const Visualizer: FunctionComponent = () => {
       <Space h="xl"></Space>
       <Progress
         size="lg"
-        striped={!moneyAvailable}
-        animate={!moneyAvailable}
+        striped={isWorkTime}
+        animate={isWorkTime}
         value={estimatedPercentage * 100.0}
       ></Progress>
       <Space h="xl"></Space>
       <Text>
-        {t("estimated-salary-desc")} {salaryPerDay.toFixed(2)} {currency}
+        <Trans
+          t={t}
+          i18nKey={descriptionKey}
+          values={{ salary: `${salaryPerDay.toFixed(2)} ${currency}` }}
+        ></Trans>
       </Text>
       <Text>
-        {t("total-collected-desc")} {totalCollectedMoney.toFixed(2)} {currency}
+        <Trans
+          t={t}
+          i18nKey="total-collected-desc"
+          values={{
+            totalSalary: `${totalCollectedMoney.toFixed(2)} ${currency}`,
+          }}
+        ></Trans>
       </Text>
     </div>
   );
