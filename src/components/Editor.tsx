@@ -114,7 +114,7 @@ const Editor: FunctionComponent<Props> = ({ onCommit }) => {
   return (
     <>
       <Text pb={24} size="sm" hidden={saveData.edited}>
-        {t("description")}
+        {t("description", { ns: "app" })}
       </Text>
       <Stack>
         <TimeRangeInput
@@ -179,38 +179,38 @@ const Editor: FunctionComponent<Props> = ({ onCommit }) => {
           <Text>{t("break-button")}</Text>
         </Button>
         {breaks.map((value, i) => (
-          <div key={`break-time-${i}-${value.start}-${value.end}`}>
-            <Grid grow align="center">
-              <Grid.Col md={11} span={10}>
-                <TimeRangeInput
-                  icon={<FiEyeOff />}
-                  withSeconds
-                  value={value}
-                  onChange={(val) => {
-                    setBreaks((s) => {
-                      const list = [...s];
-                      list[i] = val;
-                      return list;
-                    });
-                  }}
-                ></TimeRangeInput>
-              </Grid.Col>
-              <Grid.Col span={1}>
-                <ActionIcon
-                  color="red"
-                  onClick={() => {
-                    setBreaks((s) => {
-                      const list = [...s];
-                      list.splice(i, 1);
-                      return list;
-                    });
-                  }}
-                >
-                  <FiTrash></FiTrash>
-                </ActionIcon>
-              </Grid.Col>
-            </Grid>
-          </div>
+          <Grid
+            key={`break-time-${i}-${value.start}-${value.end}`}
+            align="center"
+          >
+            <Grid.Col span={10} sm={11}>
+              <TimeRangeInput
+                icon={<FiEyeOff />}
+                value={value}
+                onChange={(val) => {
+                  setBreaks((s) => {
+                    const list = [...s];
+                    list[i] = val;
+                    return list;
+                  });
+                }}
+              ></TimeRangeInput>
+            </Grid.Col>
+            <Grid.Col span={1}>
+              <ActionIcon
+                color="red"
+                onClick={() => {
+                  setBreaks((s) => {
+                    const list = [...s];
+                    list.splice(i, 1);
+                    return list;
+                  });
+                }}
+              >
+                <FiTrash></FiTrash>
+              </ActionIcon>
+            </Grid.Col>
+          </Grid>
         ))}
       </Stack>
       <Divider my="xl"></Divider>

@@ -32,6 +32,7 @@
   "zh": {
     "app": {
       "title": "退休，跑！",
+      "description": "这里是个非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常长的简要说明（仅会在首次打开 APP 时候出现）",
       "editor-title": "⚙️ 设置",
       "editor-soul-mode-title": "你正在成功",
       "salary-selector-title": "选择薪资 ({{currency}})",
@@ -39,7 +40,6 @@
       "menu-settings-btn": "设置"
     },
     "editor": {
-      "description": "这里是个非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常长的简要说明（仅会在首次打开 APP 时候出现）",
       "break-button": "添加休息时间",
       "work-time-label": "上班 / 下班时间",
       "salary-label": "月薪资",
