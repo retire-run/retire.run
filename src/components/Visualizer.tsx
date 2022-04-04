@@ -50,7 +50,7 @@ const Visualizer: FunctionComponent = () => {
       ></Progress>
       <Space h="xl"></Space>
       <Text>
-        {t("estimated-salary-desc")} {salaryPerDay} {currency}
+        {t("estimated-salary-desc")} {salaryPerDay.toFixed(2)} {currency}
       </Text>
       <Text>
         {t("total-collected-desc")} {totalCollectedMoney.toFixed(2)} {currency}

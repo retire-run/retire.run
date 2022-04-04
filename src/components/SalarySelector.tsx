@@ -5,7 +5,7 @@ import { FiRefreshCw } from "react-icons/fi";
 
 const minSalary = 10000;
 const maxSalary = 1000000;
-const salaryCount = 100;
+const salaryCount = 104;
 
 function generateSalary(): number {
   return Math.floor(Math.random() * (maxSalary - minSalary)) + minSalary;
@@ -28,9 +28,6 @@ const SalarySelector: FunctionComponent<Props> = ({ onChange }) => {
 
   return (
     <Group grow direction="column">
-      <Button onClick={regenerate} leftIcon={<FiRefreshCw></FiRefreshCw>}>
-        {t("regenerate-btn")}
-      </Button>
       <Chips
         size="xs"
         radius="sm"
@@ -49,7 +46,10 @@ const SalarySelector: FunctionComponent<Props> = ({ onChange }) => {
             {salary}
           </Chip>
         ))}
-      </Chips>
+      </Chips>{" "}
+      <Button onClick={regenerate} leftIcon={<FiRefreshCw></FiRefreshCw>}>
+        {t("regenerate-btn")}
+      </Button>
     </Group>
   );
 };
