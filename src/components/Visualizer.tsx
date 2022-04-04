@@ -1,15 +1,89 @@
+import { RetireRefreshRate, RetireTotalMoneyKey } from "@/constants";
 import { clamp } from "@/utilities";
-import {
-  useLiveTime,
-  useSaveData,
-  useStatistics,
-  useTotalMoney,
-} from "@/utilities/hooks";
+import { useSaveData } from "@/utilities/hooks";
 import { getTotalHours } from "@/utilities/time";
 import { Group, Progress, Space, Text, Title } from "@mantine/core";
-import { useDocumentTitle } from "@mantine/hooks";
-import { FunctionComponent } from "react";
+import { useDocumentTitle, useInterval, useLocalStorage } from "@mantine/hooks";
+import { FunctionComponent, useEffect, useMemo, useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
+
+export function useTotalMoney(salary: number, currentPercent: number) {
+  const [percent, setPercent] = useState(currentPercent);
+
+  const [total, setTotal] = useLocalStorage<number>({
+    key: RetireTotalMoneyKey,
+    defaultValue: 0,
+  });
+
+  useEffect(() => {
+    if (currentPercent !== percent) {
+      const delta = clamp(
+        currentPercent - percent,
+        0,
+        Number.POSITIVE_INFINITY
+      );
+      setPercent(currentPercent);
+      setTotal((v) => v + delta * salary);
+    }
+  }, [currentPercent, percent, salary, setTotal]);
+
+  return total;
+}
+
+export function useLiveTime() {
+  const [time, setTime] = useState<Time>(() => {
+    const date = new Date();
+    return {
+      hour: date.getHours(),
+      minute: date.getMinutes(),
+      second: date.getSeconds(),
+    };
+  });
+
+  const interval = useInterval(() => {
+    // TODO: optimize this
+    const date = new Date();
+    setTime({
+      hour: date.getHours(),
+      minute: date.getMinutes(),
+      second: date.getSeconds(),
+    });
+  }, RetireRefreshRate);
+
+  useEffect(() => {
+    interval.start();
+    return interval.stop;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return time;
+}
+
+export function useStatistics() {
+  const saveData = useSaveData();
+
+  return useMemo(() => {
+    const { workTime, breaks, salary, working_days } = saveData;
+
+    const salaryPerDay = salary / working_days;
+
+    const workingHours = getTotalHours(workTime.start, workTime.end);
+
+    const totalBreakHours = breaks.reduce(
+      (total, b) => total + getTotalHours(b.start, b.end),
+      0
+    );
+
+    const effectiveWorkingHours = workingHours - totalBreakHours;
+
+    return {
+      salaryPerDay,
+      workingHours,
+      effectiveWorkingHours,
+      totalBreakHours,
+    };
+  }, [saveData]);
+}
 
 const Visualizer: FunctionComponent = () => {
   const saveData = useSaveData();
@@ -19,17 +93,19 @@ const Visualizer: FunctionComponent = () => {
   const time = useLiveTime();
 
   const estimatedHours = getTotalHours(workTime.start, time);
-  const estimatedPercentage = clamp(estimatedHours / workingHours, 0, 1);
-  const percentStr = `${(estimatedPercentage * 100).toFixed(4)}%`;
+  const percentage = clamp(estimatedHours / workingHours, 0, 1);
+  const percentStr = `${(percentage * 100).toFixed(4)}%`;
 
   const { t } = useTranslation("visualizer");
 
-  const isBeforeWorkTime = estimatedPercentage <= 0.0;
-  const isAfterWorkTime = estimatedPercentage >= 1.0;
+  const isBeforeWorkTime = percentage <= 0.0;
+  const isAfterWorkTime = percentage >= 1.0;
   const isWorkTime = !isBeforeWorkTime && !isAfterWorkTime;
 
-  const collectedMoney = estimatedPercentage * salaryPerDay;
-  const totalCollectedMoney = useTotalMoney(collectedMoney);
+  const collectedMoney = percentage * salaryPerDay;
+
+  // TODO: Convert to Context if we want to access this from other components
+  const totalCollectedMoney = useTotalMoney(salaryPerDay, percentage);
 
   useDocumentTitle(
     t(isAfterWorkTime ? "after-work-doc-title" : "doc-title", {
@@ -37,12 +113,6 @@ const Visualizer: FunctionComponent = () => {
       currency,
     })
   );
-
-  // useDocumentTitle(
-  //   `💰 ${collectedMoney.toFixed(2)} ${
-  //     isAfterWorkTime ? t("after-work-title-suffix") : currency
-  //   }`
-  // );
 
   const descriptionKey = isAfterWorkTime
     ? "after-work-salary-desc"
@@ -59,7 +129,7 @@ const Visualizer: FunctionComponent = () => {
         size="lg"
         striped={isWorkTime}
         animate={isWorkTime}
-        value={estimatedPercentage * 100.0}
+        value={percentage * 100.0}
       ></Progress>
       <Space h="xl"></Space>
       <Text>
