@@ -19,6 +19,7 @@ import {
   NumberInput,
   RangeSlider,
   Space,
+  Stack,
   Switch,
   Text,
 } from "@mantine/core";
@@ -112,7 +113,7 @@ const Editor: FunctionComponent<Props> = ({ onCommit }) => {
 
   return (
     <>
-      <div>
+      <Stack>
         <TimeRangeInput
           label={t("work-time-label")}
           icon={<FiUserPlus />}
@@ -122,7 +123,6 @@ const Editor: FunctionComponent<Props> = ({ onCommit }) => {
             setWorkEnd(end);
           }}
         ></TimeRangeInput>
-        <Space h="lg"></Space>
         <RangeSlider
           color={soulMode ? SoulModeColor : undefined}
           min={0}
@@ -144,9 +144,9 @@ const Editor: FunctionComponent<Props> = ({ onCommit }) => {
           showLabelOnHover={false}
           label={null}
         ></RangeSlider>
-      </div>
+      </Stack>
       <Divider my="xl"></Divider>
-      <div>
+      <Stack>
         <Button
           disabled={soulMode}
           size="sm"
@@ -177,7 +177,6 @@ const Editor: FunctionComponent<Props> = ({ onCommit }) => {
         </Button>
         {breaks.map((value, i) => (
           <div key={`break-time-${i}-${value.start}-${value.end}`}>
-            <Space h="sm"></Space>
             <Grid grow align="center">
               <Grid.Col md={11} span={10}>
                 <TimeRangeInput
@@ -210,99 +209,102 @@ const Editor: FunctionComponent<Props> = ({ onCommit }) => {
             </Grid>
           </div>
         ))}
-      </div>
+      </Stack>
       <Divider my="xl"></Divider>
-      <div>
-        <Grid grow align="end">
-          <Grid.Col span={6}>
-            {soulMode ? (
-              <div>
-                <Text size="sm" weight="bold">
-                  {salary} {currency}
-                </Text>
-                <Group grow>
-                  <Button
-                    color={soulMode ? SoulModeColor : undefined}
-                    onClick={() => setSalaryModalOpened(true)}
-                  >
-                    {t("soul-mode-set-salary-btn")}
-                  </Button>
-                </Group>
-              </div>
-            ) : (
-              <NumberInput
-                value={salary}
-                min={0}
-                label={t("salary-label")}
-                hideControls
-                onChange={(value) => setSalary(value ?? 0)}
-                styles={{ rightSection: { width: "3rem" } }}
-                rightSection={
-                  <NativeSelect
-                    style={{ width: "100%" }}
-                    variant="unstyled"
-                    size="xs"
-                    data={RetireCurrencyList}
-                    value={currency}
-                    onChange={({ currentTarget: { value } }) =>
-                      setCurrency(value)
-                    }
-                  ></NativeSelect>
-                }
-              ></NumberInput>
-            )}
-          </Grid.Col>
-          <Grid.Col span={6}>
+      <Grid grow align="end">
+        <Grid.Col span={6}>
+          {soulMode ? (
+            <div>
+              <Text size="sm" weight="bold">
+                {salary} {currency}
+              </Text>
+              <Group grow>
+                <Button
+                  color={soulMode ? SoulModeColor : undefined}
+                  onClick={() => setSalaryModalOpened(true)}
+                >
+                  {t("soul-mode-set-salary-btn")}
+                </Button>
+              </Group>
+            </div>
+          ) : (
             <NumberInput
-              value={workDays}
+              value={salary}
               min={0}
-              max={31}
-              label={t("work-days-label")}
-              onChange={(value) => setWorkDays(value ?? 0)}
+              label={t("salary-label")}
+              hideControls
+              onChange={(value) => setSalary(value ?? 0)}
+              styles={{ rightSection: { width: "3rem" } }}
+              rightSection={
+                <NativeSelect
+                  style={{ width: "100%" }}
+                  variant="unstyled"
+                  size="xs"
+                  data={RetireCurrencyList}
+                  value={currency}
+                  onChange={({ currentTarget: { value } }) =>
+                    setCurrency(value)
+                  }
+                ></NativeSelect>
+              }
             ></NumberInput>
-          </Grid.Col>
-        </Grid>
-      </div>
+          )}
+        </Grid.Col>
+        <Grid.Col span={6}>
+          <NumberInput
+            value={workDays}
+            min={0}
+            max={31}
+            label={t("work-days-label")}
+            onChange={(value) => setWorkDays(value ?? 0)}
+          ></NumberInput>
+        </Grid.Col>
+      </Grid>
       <Space h="xl"></Space>
-      <Group position="apart">
-        <Group>
-          <Button color={soulMode ? "red" : "green"} onClick={commit}>
+      <Grid align="center">
+        <Grid.Col span={4} md={2}>
+          <Button fullWidth color={soulMode ? "red" : "green"} onClick={commit}>
             {t("run-button")}
           </Button>
-          <div hidden={showSoulSwitch}>
-            <Button
-              color="gray"
-              variant="light"
-              onClick={() => setBoringCount((v) => v + 1)}
-            >
-              {t("feeling-boring-button")}
-            </Button>
-          </div>
-        </Group>
-        <div hidden={!showSoulSwitch}>
-          <Switch
-            color="red"
-            label={t("sell-soul-switch")}
-            checked={soulMode}
-            onChange={({ currentTarget: { checked } }) => setSoulMode(checked)}
-          ></Switch>
-        </div>
-        <Modal
-          title={`${t("salary-selector-title", { ns: "app", currency })}`}
-          size="xl"
-          opened={salaryModalOpened}
-          onClose={() => {
+        </Grid.Col>
+        <Grid.Col span={8} md={5} hidden={showSoulSwitch}>
+          <Button
+            fullWidth
+            color="gray"
+            variant="light"
+            onClick={() => setBoringCount((v) => v + 1)}
+          >
+            {t("feeling-boring-button")}
+          </Button>
+        </Grid.Col>
+        <Grid.Col offset={2} span={6} md={8} hidden={!showSoulSwitch}>
+          <Group position="right">
+            <Switch
+              color="red"
+              label={t("sell-soul-switch")}
+              checked={soulMode}
+              onChange={({ currentTarget: { checked } }) =>
+                setSoulMode(checked)
+              }
+            ></Switch>
+          </Group>
+        </Grid.Col>
+      </Grid>
+      <Modal
+        title={`${t("salary-selector-title", { ns: "app", currency })}`}
+        size="xl"
+        opened={salaryModalOpened}
+        onClose={() => {
+          setSalaryModalOpened(false);
+        }}
+      >
+        <SalarySelector
+          onChange={(value) => {
             setSalaryModalOpened(false);
+            setSalary(value);
           }}
-        >
-          <SalarySelector
-            onChange={(value) => {
-              setSalaryModalOpened(false);
-              setSalary(value);
-            }}
-          ></SalarySelector>
-        </Modal>
-      </Group>
+        ></SalarySelector>
+      </Modal>
     </>
   );
 };
