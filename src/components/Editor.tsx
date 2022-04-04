@@ -4,6 +4,7 @@ import {
   RetireFallbackCurrency,
   RetireVersion,
 } from "@/constants";
+import { clamp } from "@/utilities";
 import { useSaveData } from "@/utilities/hooks";
 import { timeUtilities } from "@/utilities/time";
 import {
@@ -124,8 +125,13 @@ const Editor: FunctionComponent<Props> = ({ onCommit }) => {
           ]}
           onChange={(value) => {
             const [start, end] = value;
-            setWorkStart(timeUtilities.deserialize(start));
-            setWorkEnd(timeUtilities.deserialize(end));
+            const padding = 60;
+            setWorkStart(
+              timeUtilities.deserialize(clamp(start, 0, end - padding))
+            );
+            setWorkEnd(
+              timeUtilities.deserialize(clamp(end, start + padding, 24 * 60))
+            );
           }}
           showLabelOnHover={false}
           label={null}

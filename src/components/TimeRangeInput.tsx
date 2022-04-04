@@ -3,7 +3,7 @@ import {
   TimeRangeInput as MantineTimeRangeInput,
   TimeRangeInputProps as MantineTimeRangeInputProps,
 } from "@mantine/dates";
-import { FunctionComponent } from "react";
+import { FunctionComponent, useState } from "react";
 
 type Props = Omit<MantineTimeRangeInputProps, "value" | "onChange"> & {
   value: TimeRange;
@@ -16,16 +16,22 @@ const TimeRangeInput: FunctionComponent<Props> = ({
   ...other
 }) => {
   const { start, end } = value;
+
+  const [focus, setFocus] = useState(false);
+
   return (
     <MantineTimeRangeInput
       value={[timeUtilities.toDateTime(start), timeUtilities.toDateTime(end)]}
+      onFocus={() => setFocus(true)}
+      onBlur={() => setFocus(false)}
       onChange={(value) => {
-        const [start, end] = value;
-        onChange &&
+        if (focus) {
+          const [start, end] = value;
           onChange({
             start: timeUtilities.fromDateTime(start),
             end: timeUtilities.fromDateTime(end),
           });
+        }
       }}
       {...other}
     ></MantineTimeRangeInput>
