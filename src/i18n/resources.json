@@ -7,7 +7,7 @@
     },
     "editor": {
       "title": "⚙️ Settings",
-      "title-soul-mode": "你正在成功",
+      "title-soul-mode": "Just one step..",
       "break-button": "Add Break Time",
       "salary-label": "Salary Per Month",
       "work-days-label": "Working Days Per Month",
@@ -21,9 +21,9 @@
       "title": "Touch Fish Together 🐡",
       "doc-title": "💰 {{money}} {{currency}}",
       "after-work-doc-title": "💰 {{money}} AVAILABLE",
-      "salary-desc": "今天预计可以赚 {{salary}}",
-      "after-work-salary-desc": "今天已经赚了 {{salary}}, 为什么还不下班！",
-      "total-collected-desc": "你总共赚了 {{totalSalary}}"
+      "salary-desc": "Estimate to earn {{salary}} today",
+      "after-work-salary-desc": "Earned {{salary}}, why not get off work！",
+      "total-collected-desc": "Totally earned {{totalSalary}}"
     },
     "salary-selector": {
       "regenerate-btn": "Don't Like This？ Shuffle The Salary"
@@ -31,8 +31,8 @@
   },
   "zh": {
     "app": {
-      "title": "退休，跑！",
-      "description": "这里是个非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常长的简要说明（仅会在首次打开 APP 时候出现）",
+      "title": "retire.run - 退休，跑！",
+      "description": "retire.run 会且仅会在浏览器标签栏实时更新今天赚到了多少钱，祝你早日攒到足够的钱实现退休！ ",
       "editor-title": "⚙️ 设置",
       "editor-soul-mode-title": "你正在成功",
       "salary-selector-title": "选择薪资 ({{currency}})",
@@ -55,7 +55,7 @@
       "after-work-doc-title": "💰 {{money}} 达成",
       "salary-desc": "今天预计可以赚 {{salary}}",
       "after-work-salary-desc": "今天已经赚了 {{salary}}, 为什么还不下班！",
-      "total-collected-desc": "你总共赚了 {{totalSalary}}"
+      "total-collected-desc": "通过 retire.now 你总共赚了 {{totalSalary}}"
     },
     "salary-selector": {
       "regenerate-btn": "不喜欢？换一批薪资"
