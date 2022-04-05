@@ -2,7 +2,7 @@ import { RetireRefreshRate, RetireTotalMoneyKey } from "@/constants";
 import { clamp } from "@/utilities";
 import { useSaveData } from "@/utilities/hooks";
 import { getTotalHours } from "@/utilities/time";
-import { Group, Progress, Space, Text, Title } from "@mantine/core";
+import { Divider, Group, Progress, Space, Text, Title } from "@mantine/core";
 import { useDocumentTitle, useInterval, useLocalStorage } from "@mantine/hooks";
 import { FunctionComponent, useEffect, useMemo, useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
@@ -151,10 +151,8 @@ const Visualizer: FunctionComponent = () => {
           }}
         ></Trans>
       </Text>
-      <Text>
-        <br></br>
-        <Trans t={t} i18nKey="disclaimer"></Trans>
-      </Text>
+      <Divider></Divider>
+      <Text>{t("disclaimer")}</Text>
     </div>
   );
 };
