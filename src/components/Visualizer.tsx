@@ -136,7 +136,10 @@ const Visualizer: FunctionComponent = () => {
         <Trans
           t={t}
           i18nKey={descriptionKey}
-          values={{ salary: `${salaryPerDay.toFixed(2)} ${currency}` }}
+          values={{
+            salary: `${salaryPerDay.toFixed(2)} ${currency}`,
+            salaryToday: `${collectedMoney.toFixed(2)} ${currency}`,
+          }}
         ></Trans>
       </Text>
       <Text>

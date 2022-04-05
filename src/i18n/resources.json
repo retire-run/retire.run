@@ -21,7 +21,7 @@
       "title": "Touch Fish Together 🐡",
       "doc-title": "💰 {{money}} {{currency}}",
       "after-work-doc-title": "💰 {{money}} AVAILABLE",
-      "salary-desc": "Estimate to earn {{salary}} today",
+      "salary-desc": "Estimate to earn {{salary}} today and collected {{salaryToday}}",
       "after-work-salary-desc": "Earned {{salary}}, why not get off work！",
       "total-collected-desc": "Totally earned {{totalSalary}}"
     },
@@ -53,7 +53,7 @@
       "title": "一起摸鱼 🐡",
       "doc-title": "💰 {{money}} {{currency}}",
       "after-work-doc-title": "💰 {{money}} 达成",
-      "salary-desc": "今天预计可以赚 {{salary}}",
+      "salary-desc": "今天预计可以赚 {{salary}}，已经赚了 {{salaryToday}}",
       "after-work-salary-desc": "今天已经赚了 {{salary}}, 为什么还不下班！",
       "total-collected-desc": "通过 retire.now 你总共赚了 {{totalSalary}}"
     },
