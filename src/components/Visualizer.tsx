@@ -151,7 +151,7 @@ const Visualizer: FunctionComponent = () => {
           }}
         ></Trans>
       </Text>
-      <Divider></Divider>
+      <Divider my="lg"></Divider>
       <Text>{t("disclaimer")}</Text>
     </div>
   );
