@@ -57,7 +57,7 @@
       "salary-desc": "今天预计可以赚 {{salary}}，已经赚了 {{salaryToday}}",
       "after-work-salary-desc": "今天已经赚了 {{salary}}, 为什么还不下班！",
       "total-collected-desc": "通过 retire.now 你总共赚了 {{totalSalary}}",
-      "discliamer": "retire.run 是开源软件 (LASER-Yi/retire.run)，是没法盈利的非盈利软件，由摸鱼之心驱动。"
+      "discliamer": "retire.run 是开源软件 (LASER-Yi/retire.run)，是没法盈利的非盈利软件，由摸鱼之心驱动 ❤️"
     },
     "salary-selector": {
       "regenerate-btn": "不喜欢？换一批薪资"
