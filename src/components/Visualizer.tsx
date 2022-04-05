@@ -151,6 +151,10 @@ const Visualizer: FunctionComponent = () => {
           }}
         ></Trans>
       </Text>
+      <Text>
+        <br></br>
+        <Trans t={t} i18nKey="discliamer"></Trans>
+      </Text>
     </div>
   );
 };

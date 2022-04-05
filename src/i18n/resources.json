@@ -23,7 +23,8 @@
       "after-work-doc-title": "💰 {{money}} AVAILABLE",
       "salary-desc": "Estimate to earn {{salary}} today and collected {{salaryToday}}",
       "after-work-salary-desc": "Earned {{salary}}, why not get off work！",
-      "total-collected-desc": "Totally earned {{totalSalary}}"
+      "total-collected-desc": "Totally earned {{totalSalary}}",
+      "discliamer": "retire.run is open source software (LASER-Yi/retire.run) ，powered by the heart of retirement"
     },
     "salary-selector": {
       "regenerate-btn": "Don't Like This？ Shuffle The Salary"
@@ -55,7 +56,8 @@
       "after-work-doc-title": "💰 {{money}} 达成",
       "salary-desc": "今天预计可以赚 {{salary}}，已经赚了 {{salaryToday}}",
       "after-work-salary-desc": "今天已经赚了 {{salary}}, 为什么还不下班！",
-      "total-collected-desc": "通过 retire.now 你总共赚了 {{totalSalary}}"
+      "total-collected-desc": "通过 retire.now 你总共赚了 {{totalSalary}}",
+      "discliamer": "retire.run 是开源软件 (LASER-Yi/retire.run)，是没法盈利的非盈利软件，由摸鱼之心驱动。"
     },
     "salary-selector": {
       "regenerate-btn": "不喜欢？换一批薪资"
