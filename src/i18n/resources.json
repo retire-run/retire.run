@@ -24,7 +24,7 @@
       "salary-desc": "Estimate to earn {{salary}} today and collected {{salaryToday}}",
       "after-work-salary-desc": "Earned {{salary}}, why not get off work！",
       "total-collected-desc": "Totally earned {{totalSalary}}",
-      "discliamer": "retire.run is open source software (LASER-Yi/retire.run) ，powered by the heart of retirement"
+      "disclaimer": "retire.run is open source software (LASER-Yi/retire.run) ，powered by the heart of retirement"
     },
     "salary-selector": {
       "regenerate-btn": "Don't Like This？ Shuffle The Salary"
@@ -48,7 +48,8 @@
       "sell-soul-switch": "我愿意将灵魂出售给恶魔",
       "soul-mode-set-salary-btn": "设置薪资",
       "run-button": "润",
-      "feeling-boring-button": "好无聊，好想回家"
+      "feel-boring-button": "好无聊，好想回家",
+      "feel-more-boring-button": "别想了"
     },
     "visualizer": {
       "title": "一起摸鱼 🐡",
@@ -57,7 +58,7 @@
       "salary-desc": "今天预计可以赚 {{salary}}，已经赚了 {{salaryToday}}",
       "after-work-salary-desc": "今天已经赚了 {{salary}}, 为什么还不下班！",
       "total-collected-desc": "通过 retire.now 你总共赚了 {{totalSalary}}",
-      "discliamer": "retire.run 是开源软件 (LASER-Yi/retire.run)，是没法盈利的非盈利软件，由摸鱼之心驱动 ❤️"
+      "disclaimer": "retire.run 是开源软件 (LASER-Yi/retire.run)，是没法盈利的非盈利软件，由摸鱼之心驱动 ❤️"
     },
     "salary-selector": {
       "regenerate-btn": "不喜欢？换一批薪资"

@@ -277,7 +277,9 @@ const Editor: FunctionComponent<Props> = ({ onCommit }) => {
             variant="light"
             onClick={() => setBoringCount((v) => v + 1)}
           >
-            {t("feeling-boring-button")}
+            {boringCount === 0
+              ? t("feel-boring-button")
+              : t("feel-more-boring-button")}
           </Button>
         </Grid.Col>
         <Grid.Col offset={2} span={6} md={8} hidden={!showSoulSwitch}>
