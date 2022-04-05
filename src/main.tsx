@@ -1,5 +1,6 @@
 import "@/i18n";
 import "@/styles/globals.css";
+import { MantineProvider, TypographyStylesProvider } from "@mantine/core";
 import { useLocalStorage } from "@mantine/hooks";
 import { FunctionComponent } from "react";
 import App from "./App";
@@ -16,7 +17,11 @@ const Main: FunctionComponent = () => {
     <SaveDataContext.Provider value={saveData}>
       <SaveDataMutationContext.Provider value={setSaveData}>
         <ErrorBoundary>
-          <App></App>
+          <MantineProvider withNormalizeCSS withGlobalStyles>
+            <TypographyStylesProvider>
+              <App></App>
+            </TypographyStylesProvider>
+          </MantineProvider>
         </ErrorBoundary>
       </SaveDataMutationContext.Provider>
     </SaveDataContext.Provider>
