@@ -153,7 +153,7 @@ const Visualizer: FunctionComponent = () => {
       </Text>
       <Text>
         <br></br>
-        <Trans t={t} i18nKey="discliamer"></Trans>
+        <Trans t={t} i18nKey="disclaimer"></Trans>
       </Text>
     </div>
   );
