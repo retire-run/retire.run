@@ -2,8 +2,6 @@ name: Release version
 
 on:
   push:
-    branches:
-      - dev
     tags:
       - "v*.*.*"
 
@@ -15,6 +13,7 @@ env:
 
 jobs:
   build:
+    if: github.event.base_ref == "refs/heads/dev"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
