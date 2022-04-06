@@ -1,19 +1,26 @@
 import Editor from "@/components/Editor";
-import Visualizer from "@/components/Visualizer";
+import { RetireGithubRepo, RetireVersion } from "@/constants";
+import Visualizer from "@/pages/Visualizer";
+import WelcomeView from "@/pages/WelcomeView";
 import { useSaveData } from "@/utilities/hooks";
 import {
+  ActionIcon,
+  Anchor,
   AppShell,
+  Button,
   Container,
+  Footer,
   Group,
   Header,
   Menu,
   Modal,
+  Stack,
   Text,
   Title,
 } from "@mantine/core";
 import { FunctionComponent, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { FiSettings } from "react-icons/fi";
+import { FiGithub, FiMenu, FiSettings } from "react-icons/fi";
 
 const App: FunctionComponent = () => {
   const saveData = useSaveData();
@@ -31,11 +38,18 @@ const App: FunctionComponent = () => {
 
   return (
     <AppShell
+      fixed
       header={
         <Header height={50} p="xs">
           <Group position="apart" px={20}>
             <Text>{t("title")}</Text>
-            <Menu>
+            <Menu
+              control={
+                <ActionIcon>
+                  <FiMenu></FiMenu>
+                </ActionIcon>
+              }
+            >
               <Menu.Label>{t("menu-label")}</Menu.Label>
               <Menu.Item
                 icon={<FiSettings></FiSettings>}
@@ -47,8 +61,37 @@ const App: FunctionComponent = () => {
           </Group>
         </Header>
       }
+      footer={
+        <Footer height={74}>
+          <Stack spacing={4} m="sm" align="center">
+            <Group spacing="sm">
+              <Anchor href={RetireGithubRepo} target="_blank">
+                <Button
+                  leftIcon={<FiGithub />}
+                  styles={{ leftIcon: { marginRight: "0.3rem" } }}
+                  size="xs"
+                  variant="subtle"
+                  color="gray"
+                  compact
+                >
+                  Github
+                </Button>
+              </Anchor>
+            </Group>
+            <Text size="xs">
+              {t("disclaimer", { version: `v${RetireVersion}` })}
+            </Text>
+          </Stack>
+        </Footer>
+      }
     >
-      <Container>{saveData.edited && <Visualizer></Visualizer>}</Container>
+      <Container size="sm">
+        {saveData.edited ? (
+          <Visualizer></Visualizer>
+        ) : (
+          <WelcomeView></WelcomeView>
+        )}
+      </Container>
       <Modal
         opened={editMode}
         size="lg"

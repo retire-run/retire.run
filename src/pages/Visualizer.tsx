@@ -2,7 +2,7 @@ import { RetireTotalMoneyKey } from "@/constants";
 import { clamp } from "@/utilities";
 import { useSaveData, useTime } from "@/utilities/hooks";
 import { getTotalHours } from "@/utilities/time";
-import { Divider, Group, Progress, Space, Text, Title } from "@mantine/core";
+import { Group, Progress, Space, Text, Title } from "@mantine/core";
 import { useDocumentTitle, useLocalStorage } from "@mantine/hooks";
 import { FunctionComponent, useEffect, useMemo, useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
@@ -90,7 +90,7 @@ const Visualizer: FunctionComponent = () => {
     : "salary-desc";
 
   return (
-    <div>
+    <>
       <Group position="apart">
         <Title order={3}>{t("title")}</Title>
         <Text color="gray">{percentStr}</Text>
@@ -122,9 +122,7 @@ const Visualizer: FunctionComponent = () => {
           }}
         ></Trans>
       </Text>
-      <Divider my="lg"></Divider>
-      <Text>{t("disclaimer")}</Text>
-    </div>
+    </>
   );
 };
 
