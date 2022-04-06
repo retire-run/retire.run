@@ -1,19 +1,24 @@
 import Editor from "@/components/Editor";
-import Visualizer from "@/components/Visualizer";
+import Visualizer from "@/pages/Visualizer";
+import WelcomeView from "@/pages/WelcomeView";
 import { useSaveData } from "@/utilities/hooks";
 import {
+  ActionIcon,
   AppShell,
   Container,
+  Footer,
   Group,
   Header,
   Menu,
   Modal,
   Text,
   Title,
+  useMantineColorScheme,
 } from "@mantine/core";
 import { FunctionComponent, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { FiSettings } from "react-icons/fi";
+import { FiMenu, FiMoon, FiSettings, FiSun } from "react-icons/fi";
+import FooterContent from "./FooterContent";
 
 const App: FunctionComponent = () => {
   const saveData = useSaveData();
@@ -27,28 +32,57 @@ const App: FunctionComponent = () => {
 
   const { t } = useTranslation("app");
 
+  const { colorScheme, toggleColorScheme } = useMantineColorScheme();
+  const dark = colorScheme === "dark";
+
   const modalCloseable = saveData.edited;
 
   return (
     <AppShell
+      fixed
       header={
         <Header height={50} p="xs">
           <Group position="apart" px={20}>
             <Text>{t("title")}</Text>
-            <Menu>
-              <Menu.Label>{t("menu-label")}</Menu.Label>
-              <Menu.Item
-                icon={<FiSettings></FiSettings>}
-                onClick={() => setEditMode(true)}
+            <Group spacing="xs">
+              <ActionIcon
+                color={dark ? "yellow" : "indigo"}
+                onClick={() => toggleColorScheme()}
               >
-                {t("menu-settings-btn")}
-              </Menu.Item>
-            </Menu>
+                {dark ? <FiSun /> : <FiMoon />}
+              </ActionIcon>
+              <Menu
+                control={
+                  <ActionIcon>
+                    <FiMenu></FiMenu>
+                  </ActionIcon>
+                }
+              >
+                <Menu.Label>{t("menu-label")}</Menu.Label>
+                <Menu.Item
+                  icon={<FiSettings></FiSettings>}
+                  onClick={() => setEditMode(true)}
+                >
+                  {t("menu-settings-btn")}
+                </Menu.Item>
+              </Menu>
+            </Group>
           </Group>
         </Header>
       }
+      footer={
+        <Footer height={74}>
+          <FooterContent></FooterContent>
+        </Footer>
+      }
     >
-      <Container>{saveData.edited && <Visualizer></Visualizer>}</Container>
+      <Container size="sm">
+        {saveData.edited ? (
+          <Visualizer></Visualizer>
+        ) : (
+          <WelcomeView></WelcomeView>
+        )}
+      </Container>
       <Modal
         opened={editMode}
         size="lg"

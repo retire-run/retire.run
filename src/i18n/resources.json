@@ -3,7 +3,8 @@
     "app": {
       "title": "retire.run",
       "menu-label": "Menu",
-      "menu-settings-btn": "Settings"
+      "menu-settings-btn": "Settings",
+      "disclaimer": "{{version}} powered by the heart of retirement"
     },
     "editor": {
       "title": "⚙️ Settings",
@@ -23,8 +24,7 @@
       "after-work-doc-title": "💰 {{money}} AVAILABLE",
       "salary-desc": "Estimate to earn {{salary}} today and collected {{salaryToday}}",
       "after-work-salary-desc": "Earned {{salary}}, why not get off work！",
-      "total-collected-desc": "Totally earned {{totalSalary}}",
-      "disclaimer": "retire.run is open source software (LASER-Yi/retire.run) ，powered by the heart of retirement"
+      "total-collected-desc": "Totally earned {{totalSalary}}"
     },
     "salary-selector": {
       "regenerate-btn": "Don't Like This? Shuffle The Salary"
@@ -38,7 +38,8 @@
       "editor-soul-mode-title": "你正在成功",
       "salary-selector-title": "选择薪资 ({{currency}})",
       "menu-label": "灵魂献祭",
-      "menu-settings-btn": "设置"
+      "menu-settings-btn": "设置",
+      "disclaimer": "{{version}} 由摸鱼之心驱动 ❤️"
     },
     "editor": {
       "break-button": "添加休息时间",
@@ -57,8 +58,7 @@
       "after-work-doc-title": "💰 {{money}} 达成",
       "salary-desc": "今天预计可以赚 {{salary}}，已经赚了 {{salaryToday}}",
       "after-work-salary-desc": "今天已经赚了 {{salary}}, 为什么还不下班！",
-      "total-collected-desc": "通过 retire.now 你总共赚了 {{totalSalary}}",
-      "disclaimer": "retire.run 是开源软件 (LASER-Yi/retire.run)，是没法盈利的非盈利软件，由摸鱼之心驱动 ❤️"
+      "total-collected-desc": "通过 retire.now 你总共赚了 {{totalSalary}}"
     },
     "salary-selector": {
       "regenerate-btn": "不喜欢？换一批薪资"

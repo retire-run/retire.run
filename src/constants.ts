@@ -1,4 +1,6 @@
-export const RetireVersion = "0.0.1-beta";
+import Package from "../package.json";
+
+export const RetireVersion = Package.version;
 
 export const RetireRefreshRate = 1000;
 
@@ -21,3 +23,5 @@ export const RetireDefaultSaveData: SaveData = {
   working_days: 20,
   currency: RetireFallbackCurrency,
 };
+
+export const RetireGithubRepo = "https://github.com/LASER-Yi/retire.run";

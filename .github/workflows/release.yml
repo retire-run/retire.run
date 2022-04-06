@@ -1,0 +1,57 @@
+name: Release version
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write
+
+env:
+  RELEASE_PACKAGE: release.zip
+
+jobs:
+  build:
+    if: github.event.base_ref == "refs/heads/dev"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up git
+        run: |
+          git config --global user.name 'Github Actions'
+          git config --global user.email 'actions@github.com'
+
+      - name: Cache node_modules
+        uses: actions/cache@v2
+        with:
+          path: "node_modules"
+          key: ${{ runner.os }}-modules-${{ hashFiles('package-lock.json') }}
+          restore-keys: ${{ runner.os }}-modules-
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: "lts/*"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: |
+          npm run build
+          zip -r ${{ env.RELEASE_PACKAGE }} ./dist
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: ${{ env.RELEASE_PACKAGE }}
+
+      - name: Merge to main
+        run: |
+          git fetch --unshallow
+          git checkout main
+          git merge --no-ff --no-edit origin/dev
+          git push origin main
