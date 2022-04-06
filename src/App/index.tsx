@@ -1,5 +1,6 @@
 import Editor from "@/components/Editor";
 import { RetireGithubRepo, RetireVersion } from "@/constants";
+import Privacy from "@/pages/Privacy";
 import Visualizer from "@/pages/Visualizer";
 import WelcomeView from "@/pages/WelcomeView";
 import { useSaveData } from "@/utilities/hooks";
@@ -21,11 +22,19 @@ import {
 } from "@mantine/core";
 import { FunctionComponent, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { FiGithub, FiMenu, FiMoon, FiSettings, FiSun } from "react-icons/fi";
+import {
+  FiCheckCircle,
+  FiGithub,
+  FiMenu,
+  FiMoon,
+  FiSettings,
+  FiSun,
+} from "react-icons/fi";
 
 const App: FunctionComponent = () => {
   const saveData = useSaveData();
   const [editMode, setEditMode] = useState(!saveData.edited);
+  const [privacyModalOpen, setPrivacyModalOpen] = useState(false);
 
   useEffect(() => {
     if (!saveData.edited) {
@@ -75,12 +84,12 @@ const App: FunctionComponent = () => {
       }
       footer={
         <Footer height={74}>
-          <Stack spacing={4} m="sm" align="center">
-            <Group spacing="sm">
+          <Stack spacing={6} m="sm" align="center">
+            <Group spacing="xs">
               <Anchor href={RetireGithubRepo} target="_blank">
                 <Button
                   leftIcon={<FiGithub />}
-                  styles={{ leftIcon: { marginRight: "0.3rem" } }}
+                  styles={{ leftIcon: { marginRight: "0.4rem" } }}
                   size="xs"
                   variant="subtle"
                   color="gray"
@@ -89,6 +98,17 @@ const App: FunctionComponent = () => {
                   Github
                 </Button>
               </Anchor>
+              <Button
+                leftIcon={<FiCheckCircle />}
+                styles={{ leftIcon: { marginRight: "0.4rem" } }}
+                size="xs"
+                variant="subtle"
+                color="gray"
+                compact
+                onClick={() => setPrivacyModalOpen(true)}
+              >
+                Privacy
+              </Button>
             </Group>
             <Text size="xs">
               {t("disclaimer", { version: `v${RetireVersion}` })}
@@ -121,6 +141,14 @@ const App: FunctionComponent = () => {
         }
       >
         <Editor onCommit={() => setEditMode(false)}></Editor>
+      </Modal>
+      <Modal
+        title="Privacy"
+        opened={privacyModalOpen}
+        onClose={() => setPrivacyModalOpen(false)}
+        centered
+      >
+        <Privacy></Privacy>
       </Modal>
     </AppShell>
   );
