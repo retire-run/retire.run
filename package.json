@@ -14,14 +14,14 @@
   },
   "private": true,
   "dependencies": {
+    "@mantine/core": "^4",
+    "@mantine/dates": "^4",
+    "@mantine/hooks": "^4",
     "i18next": "^21.6",
     "react": "latest",
     "react-dom": "latest",
     "react-i18next": "^11.16",
-    "react-icons": "latest",
-    "@mantine/core": "^4",
-    "@mantine/dates": "^4",
-    "@mantine/hooks": "^4"
+    "react-icons": "latest"
   },
   "devDependencies": {
     "@types/node": "latest",
@@ -38,6 +38,7 @@
     "typescript": "latest",
     "vite": "latest",
     "vite-plugin-checker": "latest",
-    "vite-plugin-pwa": "latest"
+    "vite-plugin-pwa": "latest",
+    "worker-timers": "^7.0.45"
   }
 }

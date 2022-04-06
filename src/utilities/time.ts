@@ -51,3 +51,13 @@ export function getTotalMinutes(from: Time, to: Time): number {
 export function getTotalHours(from: Time, to: Time): number {
   return toHours(to) - toHours(from);
 }
+
+export function getCurrentTime(): Time {
+  const date = new Date();
+
+  return {
+    hour: date.getHours(),
+    minute: date.getMinutes(),
+    second: date.getSeconds(),
+  };
+}

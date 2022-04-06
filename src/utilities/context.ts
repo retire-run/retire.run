@@ -7,3 +7,5 @@ export const SaveDataMutationContext = createContext<
 >(() => {
   throw new Error("SaveDataMutationContext is not available");
 });
+
+export const LiveTimeContext = createContext<Time | null>(null);

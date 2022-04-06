@@ -1,9 +1,9 @@
-import { RetireRefreshRate, RetireTotalMoneyKey } from "@/constants";
+import { RetireTotalMoneyKey } from "@/constants";
 import { clamp } from "@/utilities";
-import { useSaveData } from "@/utilities/hooks";
+import { useSaveData, useTime } from "@/utilities/hooks";
 import { getTotalHours } from "@/utilities/time";
 import { Divider, Group, Progress, Space, Text, Title } from "@mantine/core";
-import { useDocumentTitle, useInterval, useLocalStorage } from "@mantine/hooks";
+import { useDocumentTitle, useLocalStorage } from "@mantine/hooks";
 import { FunctionComponent, useEffect, useMemo, useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
 
@@ -28,35 +28,6 @@ export function useTotalMoney(salary: number, currentPercent: number) {
   }, [currentPercent, percent, salary, setTotal]);
 
   return total;
-}
-
-export function useLiveTime() {
-  const [time, setTime] = useState<Time>(() => {
-    const date = new Date();
-    return {
-      hour: date.getHours(),
-      minute: date.getMinutes(),
-      second: date.getSeconds(),
-    };
-  });
-
-  const interval = useInterval(() => {
-    // TODO: optimize this
-    const date = new Date();
-    setTime({
-      hour: date.getHours(),
-      minute: date.getMinutes(),
-      second: date.getSeconds(),
-    });
-  }, RetireRefreshRate);
-
-  useEffect(() => {
-    interval.start();
-    return interval.stop;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  return time;
 }
 
 export function useStatistics() {
@@ -90,7 +61,7 @@ const Visualizer: FunctionComponent = () => {
   const { salaryPerDay, workingHours } = useStatistics();
 
   const { workTime, currency } = saveData;
-  const time = useLiveTime();
+  const time = useTime();
 
   const estimatedHours = getTotalHours(workTime.start, time);
   const percentage = clamp(estimatedHours / workingHours, 0, 1);
